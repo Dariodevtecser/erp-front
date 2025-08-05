@@ -23,6 +23,7 @@
     "@angular/compiler-cli": "~20.1.0",
     "@angular/language-service": "~20.1.0",
     "@eslint/js": "^9.8.0",
+    "@nrwl/angular": "^19.8.4",
     "@nx/angular": "21.3.11",
     "@nx/cypress": "21.3.11",
     "@nx/eslint": "21.3.11",
