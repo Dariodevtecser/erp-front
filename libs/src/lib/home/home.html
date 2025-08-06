@@ -1,9 +1,11 @@
 <div class="modulos-grid">
   <erp-frontend-card
-    *ngFor="let modulo of modulos"
-    [title]="modulo.title"
-    [icon]="modulo.icon"
-    [isFavorite]="isFavorite(modulo)"
-    (favorite)="onFavorite(modulo)"
-  ></erp-frontend-card>
+  *ngFor="let modulo of modulos"
+  [title]="modulo.title"
+  [icon]="modulo.icon"
+  [isFavorite]="isFavorite(modulo)"
+  [isSelected]="isSelected(modulo)"
+  (favorite)="onFavorite(modulo)"
+  (select)="onSelect(modulo)"
+></erp-frontend-card>
 </div>
