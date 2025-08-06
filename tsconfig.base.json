@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@erp-frontend/home": ["libs/src/index.ts"]
+      "@erp-frontend/home": ["libs/src/index.ts"],
+      "@erp-frontend/sidebar": ["libs/src/lib/sidebar/sidebar.component.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

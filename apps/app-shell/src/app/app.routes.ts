@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-
+ 
 export const appRoutes: Route[] = [
   {
     path: 'login',
@@ -10,6 +10,11 @@ export const appRoutes: Route[] = [
     path: 'home',
     loadComponent: () =>
       import('@erp-frontend/home').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'sidebar',
+    loadComponent: () =>
+      import('@erp-frontend/sidebar').then((m) => m.SidebarComponent),
   },
   {
     path: '',
