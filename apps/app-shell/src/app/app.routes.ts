@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
- 
+
 export const appRoutes: Route[] = [
   {
     path: 'login',
@@ -12,13 +12,13 @@ export const appRoutes: Route[] = [
       import('@erp-frontend/home').then((m) => m.HomeComponent),
   },
   {
-    path: 'sidebar',
-    loadComponent: () =>
-      import('@erp-frontend/sidebar').then((m) => m.SidebarComponent),
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'full',
+    },
+    {
+      path: 'sidebar',
+      loadChildren: () =>
+        import('@erp-frontend/sidebar').then((m) => m.SidebarComponent),
+    },
 ];
