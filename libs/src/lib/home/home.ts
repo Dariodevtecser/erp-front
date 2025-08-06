@@ -10,7 +10,7 @@ import { CardComponent } from '../card/card.component';
   styleUrl: './home.css',
 })
 export class HomeComponent {
-  modulos = [
+  originalModulos = [
     { title: 'Contabilidad', icon: 'assets/Vector-4.png', route: '/contabilidad' },
     { title: 'Presupuesto', icon: 'assets/Vector-3.png', route: '/presupuesto' },
     { title: 'Tesorería', icon: 'assets/Vector-9.png', route: '/tesoreria' },
@@ -22,24 +22,35 @@ export class HomeComponent {
     // Agrega aquí todos los módulos que necesites
   ];
 
+  modulos = [...this.originalModulos];
+  selectedCard: string | null = null;
   favoritos: string[] = [];
+  
+  onSelect(modulo: any) {
+    this.selectedCard = modulo.title;
+  }
 
   onFavorite(modulo: any) {
     const idx = this.favoritos.indexOf(modulo.title);
     if (idx === -1) {
-      this.favoritos.unshift(modulo.title);
-      // Mueve la card al inicio
-      this.modulos = [
-        modulo,
-        ...this.modulos.filter(m => m.title !== modulo.title)
-      ];
+      this.favoritos.push(modulo.title);
     } else {
       this.favoritos.splice(idx, 1);
-      // Opcional: podrías devolver la card a su lugar original si tienes un array base
     }
+    this.ordenarModulos();
   }
 
-  isFavorite(modulo: any): boolean {
-    return this.favoritos.includes(modulo.title);
+  ordenarModulos() {
+    const favoritos = this.originalModulos.filter(m => this.favoritos.includes(m.title));
+    const noFavoritos = this.originalModulos.filter(m => !this.favoritos.includes(m.title));
+    this.modulos = [...favoritos, ...noFavoritos];
   }
+
+isFavorite(modulo: any): boolean {
+  return this.favoritos.includes(modulo.title);
+}
+
+isSelected(modulo: any): boolean {
+  return this.selectedCard === modulo.title;
+}
 }

@@ -12,9 +12,18 @@ export class CardComponent {
   @Input() title = '';
   @Input() icon = '';
   @Input() isFavorite = false;
+  @Input() isSelected = false;
   @Output() favorite = new EventEmitter<void>();
+  @Output() select = new EventEmitter<void>();
 
-  onFavoriteClick() {
-    this.favorite.emit();
-  }
+ onCardClick(event: MouseEvent) {
+  // Evita que el click en la estrella seleccione la card
+  if ((event.target as HTMLElement).closest('.favorite-button')) return;
+  this.select.emit();
+}
+
+onFavoriteClick(event: MouseEvent) {
+  event.stopPropagation();
+  this.favorite.emit();
+}
 }
