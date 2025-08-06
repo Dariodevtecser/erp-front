@@ -11,14 +11,14 @@ import { CardComponent } from '../card/card.component';
 })
 export class HomeComponent {
   originalModulos = [
-    { title: 'Contabilidad', icon: 'assets/Vector-4.png', route: '/contabilidad' },
-    { title: 'Presupuesto', icon: 'assets/Vector-3.png', route: '/presupuesto' },
-    { title: 'Tesorería', icon: 'assets/Vector-9.png', route: '/tesoreria' },
-    { title: 'Nómina', icon: 'assets/Vector-6.png', route: '/nomina' },
-    { title: 'Almacén', icon: 'assets/Vector-7.png', route: '/almacen' },
-    { title: 'Contratos', icon: 'assets/Vector-8.png', route: '/contratos' },
-    { title: 'Banco de Proyectos', icon: 'assets/Vector-9.png', route: '/banco' },
-    { title: 'Servicios Públicos', icon: 'assets/Vector-2.png', route: '/servicios' },
+    { title: 'Contabilidad', icon: 'fa-calculator', route: '/contabilidad' },
+    { title: 'Presupuesto', icon: 'fa-donate', route: '/presupuesto' },
+    { title: 'Tesorería', icon: 'fa-institution', route: '/tesoreria' },
+    { title: 'Nómina', icon: 'fa-hand-holding-usd', route: '/nomina' },
+    { title: 'Almacén', icon: 'fa-warehouse', route: '/almacen' },
+    { title: 'Contratos', icon: 'fa-file-lines', route: '/contratos' },
+    { title: 'Banco de Proyectos', icon: 'fa-institution', route: '/banco' },
+    { title: 'Servicios Públicos', icon: 'fa-siren-on', route: '/servicios' },
     // Agrega aquí todos los módulos que necesites
   ];
 
