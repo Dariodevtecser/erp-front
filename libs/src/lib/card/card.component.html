@@ -1,0 +1,15 @@
+<div class="card" [class.selected]="isFavorite">
+  <button class="favorite-button" (click)="onFavoriteClick()">
+    <svg *ngIf="!isFavorite" class="star" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15 8.5 22 9.3 17 14.1 18.5 21 12 17.8 5.5 21 7 14.1 2 9.3 9 8.5 12 2"/>
+    </svg>
+    <svg *ngIf="isFavorite" class="star selected" width="24" height="24" viewBox="0 0 24 24" fill="#FFD600" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15 8.5 22 9.3 17 14.1 18.5 21 12 17.8 5.5 21 7 14.1 2 9.3 9 8.5 12 2"/>
+    </svg>
+    <span>{{ isFavorite ? 'Favorito' : 'Marcar como favorito' }}</span>
+  </button>
+  <div class="card-icon">
+    <img [src]="icon" [alt]="title" />
+  </div>
+  <div class="card-title">{{ title }}</div>
+</div>
