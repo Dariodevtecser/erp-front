@@ -1,11 +1,9 @@
 
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from '@erp-frontend/sidebar';
-
 
 @Component({
-  imports: [RouterModule, SidebarComponent],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',

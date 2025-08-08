@@ -1,4 +1,6 @@
-<div class="modulos-grid">
+<div class="home-container">
+  <lib-sidebar></lib-sidebar>
+  <div class="modulos-grid">
   <erp-frontend-card
   *ngFor="let modulo of modulos"
   [title]="modulo.title"
@@ -8,4 +10,5 @@
   (favorite)="onFavorite(modulo)"
   (select)="onSelect(modulo)"
 ></erp-frontend-card>
+  </div>
 </div>
