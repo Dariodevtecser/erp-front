@@ -1,11 +1,7 @@
 <aside class="sidebar-gin360">
   <!-- Header: Logo y título -->
   <div class="sidebar-header">
-    <img src="/assets/logo-gin360.png" alt="Gin 360 Logo" class="sidebar-logo" />
-    <div class="sidebar-title">
-      <span class="sidebar-title-main">Gin 360</span>
-      <span class="sidebar-title-sub">Gestión Integral</span>
-    </div>
+    <img src="../../assets/gin360-logo.png" alt="Gin 360 Logo" class="sidebar-logo" />
   </div>
   <hr class="sidebar-divider" />
 
@@ -14,10 +10,10 @@
     <div *ngFor="let item of menuItems" class="sidebar-menu-item">
       <!-- Item con subitems -->
       <div *ngIf="item.children && item.children.length > 0; else simpleItem">
-        <!-- <div class="sidebar-menu-label clickable" (click)="toggleSubmenu(item.label)">
+        <div class="sidebar-menu-label clickable" (click)="toggleSubmenu(item.label)">
           <span>{{ item.label }}</span>
           <span class="chevron" [ngClass]="{'expanded': isExpanded(item.label)}">&#x25BC;</span>
-        </div> -->
+        </div>
         <div *ngIf="isExpanded(item.label)" class="sidebar-submenu">
           <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item">
             {{ child.label }}

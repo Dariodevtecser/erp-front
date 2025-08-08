@@ -30,17 +30,10 @@ export class SidebarComponent {
     {
       label: 'Auditoria',
       children: [
-        { label: 'Validar Catálogo de Cuentas', route: '/validar-catalogo-cuentas' },
-        { label: 'Validar Enlaces Contables', route: '/validar-enlaces-contables' },
-        { label: 'Auditar Ejecución de Gastos', route: '/auditar-ejecucion-gastos' },
-        { label: 'Distribución del Presupuesto por Grupos de Rentas', route: '/distribucion-presupuesto-grupos-rentas' },
-        { label: 'Revisar Saldos de Certificados de Disponibilidad', route: '/revisar-saldos-certificados-disponibilidad' },
-        { label: 'Revisar Saldos de Registros Presupuestales', route: '/revisar-saldos-registros-presupuestales' },
-        { label: 'Localizar Documentos', route: '/localizar-documentos' },
-        { label: 'Informe Ley 617', route: '/informe-ley-617' },
-        { label: 'Seguimiento de Recursos por Fuente de Financiación', route: '/seguimiento-recursos-fuente-financiacion' },
-        { label: 'Ejecucion Gastos Vs Documentos', route: '/ejecucion-gastos-vs-documentos' },
-        { label: 'Ejecucion Ingresos Vs Recaudos', route: '/ejecucion-ingresos-vs-recaudos' }
+        { label: 'Seguimiento de Recursos por Fuente de Financiación', route: '/seguimiento-fuente-financiacion' },
+        { label: 'Declaraciones IYC Vs Recaudos', route: '/declaraciones-iyc-vs-recaudos' },
+        { label: 'Recaudos IPU Vs CAR', route: '/recaudos-ipu-vs-car' },
+        { label: 'Bancos Vs Recaudos Por Rubro', route: '/bancos-vs-recaudos-rubro' }
       ]
     },
     {
@@ -52,14 +45,14 @@ export class SidebarComponent {
     {
       label: 'Procesos Periodicos',
       children: [
-        { label: 'Descarga Automatica de Recaudos Código Barras', route: '/descarga-automatica-recaudos-codigo-barras' },
+        { label: 'Descarga Automatica de Recaudos Código Barras', route: '/descarga-automatica-codigobarras' },
         { label: 'Descarga Manual De Recaudos', route: '/descarga-manual-recaudos' },
         { label: 'Descarga en Bloque', route: '/descarga-en-bloque' },
-        { label: 'Cierre de Pagos', route: '/cierre-pagos' },
+        { label: 'Cierre de Pagos', route: '/cierre-de-pagos' },
         { label: 'Proceso de Consignación', route: '/proceso-consignacion' },
         { label: 'Constitución Cuentas por Pagar', route: '/constitucion-cuentas-por-pagar' },
-        { label: 'Carga Datos Camara de Comercio', route: '/carga-datos-camara-comercio' },
-        { label: 'Carga Datos DIAN Ingresos', route: '/carga-datos-dian-ingresos' }
+        { label: 'Carga Datos Camara de Comercio', route: '/carga-camara-comercio' },
+        { label: 'Carga Datos DIAN Ingresos', route: '/carga-dian-ingresos' }
       ]
     },
     {
