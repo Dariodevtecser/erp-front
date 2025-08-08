@@ -25,9 +25,18 @@
             "glob": "**/*",
             "input": "apps/app-shell/src/assets",
             "output": "assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/src/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/app-shell/src/styles.scss"]
+        "styles": [
+
+
+          "apps/app-shell/src/styles.scss"
+        ]
       },
       "configurations": {
         "production": {
