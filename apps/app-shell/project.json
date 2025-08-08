@@ -32,7 +32,11 @@
             "output": "assets"
           }
         ],
-        "styles": ["apps/app-shell/src/styles.scss"]
+        "styles": [
+
+
+          "apps/app-shell/src/styles.scss"
+        ]
       },
       "configurations": {
         "production": {

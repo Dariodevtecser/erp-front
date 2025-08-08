@@ -16,9 +16,15 @@ export const appRoutes: Route[] = [
       redirectTo: 'login',
       pathMatch: 'full',
     },
+    // {
+    //   path: 'sidebar',
+    //   loadChildren: () =>
+    //     import('@erp-frontend/sidebar').then((m) => m.SidebarComponent),
+    // },
     {
-      path: 'sidebar',
-      loadChildren: () =>
-        import('@erp-frontend/sidebar').then((m) => m.SidebarComponent),
-    },
+    path: 'header',
+    loadComponent: () =>
+    import('@erp-frontend/header').then((m) => m.HeaderComponent),
+    }
+
 ];
