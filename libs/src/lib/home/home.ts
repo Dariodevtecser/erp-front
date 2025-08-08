@@ -13,14 +13,14 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 })
 export class HomeComponent {
   originalModulos = [
-    { title: 'Contabilidad', icon: 'fa-calculator', route: '/contabilidad' },
-    { title: 'Presupuesto', icon: 'fa-donate', route: '/presupuesto' },
-    { title: 'Tesorería', icon: 'fa-institution', route: '/tesoreria' },
-    { title: 'Nómina', icon: 'fa-hand-holding-usd', route: '/nomina' },
-    { title: 'Almacén', icon: 'fa-warehouse', route: '/almacen' },
-    { title: 'Contratos', icon: 'fa-file-lines', route: '/contratos' },
-    { title: 'Banco de Proyectos', icon: 'fa-institution', route: '/banco' },
-    { title: 'Servicios Públicos', icon: 'fa-charging-station', route: '/servicios' },
+    { title: 'Contabilidad', icon: 'fas fa-calculator', route: '/contabilidad' },
+    { title: 'Presupuesto', icon: 'fas fa-donate', route: '/presupuesto' },
+    { title: 'Tesorería', icon: 'fas fa-institution', route: '/tesoreria' },
+    { title: 'Nómina', icon: 'fas fa-hand-holding-usd', route: '/nomina' },
+    { title: 'Almacén', icon: 'fas fa-warehouse', route: '/almacen' },
+    { title: 'Contratos', icon: 'fas fa-file-lines', route: '/contratos' },
+    { title: 'Banco de Proyectos', icon: 'fas fa-institution', route: '/banco' },
+    { title: 'Servicios Públicos', icon: 'fas fa-charging-station', route: '/servicios' },
   ];
 
   modulos = [...this.originalModulos];
