@@ -18,8 +18,7 @@ export class HomeComponent {
     { title: 'Almacén', icon: 'fa-warehouse', route: '/almacen' },
     { title: 'Contratos', icon: 'fa-file-lines', route: '/contratos' },
     { title: 'Banco de Proyectos', icon: 'fa-institution', route: '/banco' },
-    { title: 'Servicios Públicos', icon: 'fa-siren-on', route: '/servicios' },
-    // Agrega aquí todos los módulos que necesites
+    { title: 'Servicios Públicos', icon: 'fa-charging-station', route: '/servicios' },
   ];
 
   modulos = [...this.originalModulos];
