@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { SelectionService } from '../services/selection.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-home',
@@ -12,6 +14,8 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
   styleUrl: './home.css',
 })
 export class HomeComponent {
+
+  constructor(private selectionService: SelectionService, private router: Router) {}
   originalModulos = [
     { title: 'Contabilidad', icon: 'fas fa-calculator', route: '/contabilidad' },
     { title: 'Presupuesto', icon: 'fas fa-donate', route: '/presupuesto' },
@@ -29,6 +33,7 @@ export class HomeComponent {
 
   onSelect(modulo: any) {
     this.selectedCard = modulo.title;
+    this.selectionService.setSelectedModule(modulo.title);
   }
 
   onFavorite(modulo: any) {
