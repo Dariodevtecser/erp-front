@@ -1,21 +1,17 @@
 <div class="home-layout">
-  <lib-sidebar></lib-sidebar>
-
+  <!-- <lib-sidebar></lib-sidebar> -->
   <div class="home-container">
-    <lib-header></lib-header>
-
-    <div class="home-content">
-      <div class="modulos-grid">
-        <erp-frontend-card
-          *ngFor="let modulo of modulos"
-          [title]="modulo.title"
-          [icon]="modulo.icon"
-          [isFavorite]="isFavorite(modulo)"
-          [isSelected]="isSelected(modulo)"
-          (favorite)="onFavorite(modulo)"
-          (select)="onSelect(modulo)"
-        ></erp-frontend-card>
-      </div>
+    <!-- <lib-header></lib-header> -->
+    <div class="modulos-grid">
+      <erp-frontend-card
+      *ngFor="let modulo of modulos"
+      [title]="modulo.title"
+      [icon]="modulo.icon"
+      [isFavorite]="isFavorite(modulo)"
+      [isSelected]="isSelected(modulo)"
+      (favorite)="onFavorite(modulo)"
+      (select)="onSelect(modulo)"
+      ></erp-frontend-card>
     </div>
 
     <lib-footer></lib-footer>

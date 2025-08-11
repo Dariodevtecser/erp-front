@@ -1,16 +1,13 @@
-import { FooterComponent } from './../footer/footer.component';
-import { HeaderComponent } from './../header/header.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
-import { SidebarComponent } from "../sidebar/sidebar.component";
 import { SelectionService } from '../services/selection.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-home',
   standalone: true,
-  imports: [CommonModule, CardComponent, HeaderComponent, SidebarComponent, FooterComponent],
+  imports: [CommonModule, CardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
