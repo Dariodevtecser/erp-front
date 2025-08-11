@@ -4,10 +4,9 @@
       <polygon points="12 2 15 8.5 22 9.3 17 14.1 18.5 21 12 17.8 5.5 21 7 14.1 2 9.3 9 8.5 12 2"
         [attr.fill]="isFavorite ? '#FFD600' : 'none'" />
     </svg>
-    <span>Marcar como favorito</span>
   </button>
   <div class="card-icon">
-    <img [src]="icon" [alt]="title" />
+    <i class="fa-2x" [ngClass]="icon" aria-hidden="true"></i>
   </div>
   <div class="divider"></div>
   <div class="card-title">{{ title }}</div>

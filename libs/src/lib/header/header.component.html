@@ -6,7 +6,7 @@
     <nav class="breadcrumb">
       <span class="breadcrumb-item muted">Home</span>
       <span class="separator">&gt;</span>
-      <!-- <span class="breadcrumb-item active">Unidades ejecutoras</span> -->
+      <span *ngIf="selectedModule">{{ selectedModule }}</span>  
     </nav>
   </div>
 
@@ -17,7 +17,7 @@
     </div>
     <div class="user-info">
       <div class="user-avatar"></div>
-      <span class="user-name">Jason Romero</span>
+      <span class="user-name">Jason Rodriguez</span>
     </div>
   </div>
 </header>
