@@ -7,6 +7,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './budget.component.html',
-  styleUrl: './budget.component.css',
+  styleUrl: './budget.component.scss',
 })
 export class BudgetComponent {}
