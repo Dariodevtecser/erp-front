@@ -1,3 +1,4 @@
+import { FooterComponent } from './../footer/footer.component';
 import { HeaderComponent } from './../header/header.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,7 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 @Component({
   selector: 'lib-home',
   standalone: true,
-  imports: [CommonModule, CardComponent, HeaderComponent, SidebarComponent],
+  imports: [CommonModule, CardComponent, HeaderComponent, SidebarComponent, FooterComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

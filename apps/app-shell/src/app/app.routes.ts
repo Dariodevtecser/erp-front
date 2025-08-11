@@ -25,6 +25,12 @@ export const appRoutes: Route[] = [
     path: 'header',
     loadComponent: () =>
     import('@erp-frontend/header').then((m) => m.HeaderComponent),
-    }
+    },
+
+    {
+      path: 'footer',
+      loadComponent: () =>
+        import('@erp-frontend/footer').then((m) => m.FooterComponent),
+    } 
 
 ];

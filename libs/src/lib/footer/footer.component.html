@@ -1,0 +1,22 @@
+<footer class="app-footer" role="contentinfo">
+  <div class="app-footer__inner">
+    <div class="app-footer__left">
+      <span class="copyright">
+        © {{ year }} <strong>GIN 360</strong> - Todos los derechos reservados
+      </span>
+    </div>
+
+    <div class="app-footer__right">
+      <div class="divider"></div>
+      <div class="lang-group">
+        <i class="fa-solid fa-earth-americas globe-icon"></i>
+        <button class="lang-btn" type="button" (click)="onToggleLanguage()">
+          Español
+          <svg class="chev" viewBox="0 0 24 24" width="12" height="12">
+            <path fill="#6d6d6d" d="M10 17l5-5-5-5v10z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
