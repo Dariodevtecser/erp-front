@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { SelectionService } from '../services/selection.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-home',
@@ -13,15 +15,17 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
   styleUrl: './home.css',
 })
 export class HomeComponent {
+
+  constructor(private selectionService: SelectionService, private router: Router) {}
   originalModulos = [
-    { title: 'Contabilidad', icon: 'fa-calculator', route: '/contabilidad' },
-    { title: 'Presupuesto', icon: 'fa-donate', route: '/presupuesto' },
-    { title: 'Tesorería', icon: 'fa-institution', route: '/tesoreria' },
-    { title: 'Nómina', icon: 'fa-hand-holding-usd', route: '/nomina' },
-    { title: 'Almacén', icon: 'fa-warehouse', route: '/almacen' },
-    { title: 'Contratos', icon: 'fa-file-lines', route: '/contratos' },
-    { title: 'Banco de Proyectos', icon: 'fa-institution', route: '/banco' },
-    { title: 'Servicios Públicos', icon: 'fa-charging-station', route: '/servicios' },
+    { title: 'Contabilidad', icon: 'fas fa-calculator', route: '/contabilidad' },
+    { title: 'Presupuesto', icon: 'fas fa-donate', route: '/presupuesto' },
+    { title: 'Tesorería', icon: 'fas fa-institution', route: '/tesoreria' },
+    { title: 'Nómina', icon: 'fas fa-hand-holding-usd', route: '/nomina' },
+    { title: 'Almacén', icon: 'fas fa-warehouse', route: '/almacen' },
+    { title: 'Contratos', icon: 'fas fa-file-lines', route: '/contratos' },
+    { title: 'Banco de Proyectos', icon: 'fas fa-institution', route: '/banco' },
+    { title: 'Servicios Públicos', icon: 'fas fa-charging-station', route: '/servicios' },
   ];
 
   modulos = [...this.originalModulos];
@@ -30,6 +34,7 @@ export class HomeComponent {
 
   onSelect(modulo: any) {
     this.selectedCard = modulo.title;
+    this.selectionService.setSelectedModule(modulo.title);
   }
 
   onFavorite(modulo: any) {
