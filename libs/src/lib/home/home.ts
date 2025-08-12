@@ -1,3 +1,4 @@
+import { FooterComponent } from './../footer/footer.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
