@@ -1,1 +1,91 @@
-<p>Budget Accounts works!</p>
+<div class="budget-layout">
+  <lib-sidebar class="budget-sidebar"></lib-sidebar>
+  <main class="budget-main">
+    <div class="budget-header">
+      <div class="user-bar">
+        <span class="icon-home"></span>
+        <span>Home</span>
+        <span class="user-avatar"></span>
+        <span class="user-name">Jason Romero</span>
+      </div>
+    </div>
+    <div class="budget-filters">
+      <select [(ngModel)]="vigencia">
+        <option [value]="2025">2025</option>
+        <option [value]="2024">2024</option>
+      </select>
+      <select [(ngModel)]="tipoPresupuesto">
+        <option value="">Tipo Presupuesto</option>
+        <option value="Ingresos">Ingresos</option>
+        <option value="Funcionamiento">Funcionamiento</option>
+        <option value="Inversión">Inversión</option>
+        <option value="Deuda">Deuda</option>
+        <option value="SGR">SGR</option>
+      </select>
+      <input [(ngModel)]="search" placeholder="Search" />
+      <!-- Botón para crear cuenta -->
+      <button class="btn-primary" (click)="onAddAccount()">+ Nueva Cuenta</button>
+    </div>
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Opciones</th>
+          <th>Rubro</th>
+          <th>Nombre</th>
+          <th>Gr Nombre</th>
+          <th>Nivel</th>
+          <th>SF</th>
+          <th>Código producto</th>
+          <th>Grupo Renta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let acc of filteredAccounts">
+          <td>
+  <button class="icon-btn add" title="Agregar" (click)="onAddAccount()">
+    <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x="9" y="4" width="2" height="12" rx="1" fill="#fff"/>
+      <rect x="4" y="9" width="12" height="2" rx="1" fill="#fff"/>
+    </svg>
+  </button>
+  <button class="icon-btn edit" title="Editar">
+    <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M5 15V13.5858C5 13.2107 5.15804 12.851 5.43934 12.5858L13.2929 4.73223C13.6834 4.34171 14.3166 4.34171 14.7071 4.73223L15.2678 5.29289C15.6583 5.68342 15.6583 6.31658 15.2678 6.70711L7.41421 14.5607C7.149 14.842 6.78929 15 6.41421 15H5Z" fill="#fff"/>
+      <rect x="4" y="15" width="12" height="2" rx="1" fill="#fff"/>
+    </svg>
+  </button>
+  <button class="icon-btn delete" title="Eliminar">
+    <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect x="5" y="7" width="10" height="8" rx="2" fill="#fff"/>
+      <rect x="7" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
+      <rect x="9.4" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
+      <rect x="11.6" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
+      <rect x="7" y="5" width="6" height="2" rx="1" fill="#fff"/>
+    </svg>
+  </button>
+</td>
+          <td>{{ acc.rubro }}</td>
+          <td>{{ acc.nombre }}</td>
+          <td>-</td>
+          <td>{{ acc.nivel }}</td>
+          <td>{{ acc.sf }}</td>
+          <td>{{ acc.codigoProducto }}</td>
+          <td>{{ acc.grupoRenta }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="budget-pagination">
+      <span>Cantidad</span>
+      <select>
+        <option>10</option>
+        <option>25</option>
+        <option>50</option>
+      </select>
+      <span>1 de 3</span>
+      <button>&lt;&lt;</button>
+      <button>&lt;</button>
+      <button>&gt;</button>
+      <button>&gt;&gt;</button>
+    </div>
+  </main>
+</div>

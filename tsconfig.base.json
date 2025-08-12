@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@erp-frontend/header": ["libs/src/lib/header/header.component.ts"],
-      "@erp-frontend/home": ["libs/src/index.ts"]
+      "@erp-frontend/home": ["libs/src/index.ts"],
+      "@erp-frontend/sidebar": ["libs/src/lib/sidebar/sidebar.component.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

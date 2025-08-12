@@ -1,1 +1,232 @@
-/* Styles for Budget Accounts */
+.budget-layout {
+  display: flex;
+  height: 100vh;
+  background: #f5f6fa;
+}
+
+.budget-sidebar {
+  width: 260px;
+  min-width: 220px;
+  background: transparent;
+  box-shadow: 2px 0 8px #0002;
+  z-index: 10;
+}
+
+.budget-main {
+  flex: 1 1 auto;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #fff;
+  padding: 18px 32px 0 32px;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 56px;
+}
+
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .icon-home {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: #6769c7;
+    background: #e3e6f3;
+    border-radius: 50%;
+  }
+  span {
+    color: #888;
+    font-weight: 500;
+    font-size: 1.05em;
+  }
+}
+
+.budget-filters {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  padding: 14px 32px 10px 32px;
+  border-bottom: 1px solid #e6e6e6;
+  select, input {
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    background: #f9fafd;
+    color: #444;
+    outline: none;
+    min-width: 120px;
+    height: 36px;
+  }
+  input {
+    min-width: 180px;
+  }
+  .btn-primary {
+    background: #6769c7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: 36px;
+    &:hover {
+      background: #2d3480;
+    }
+  }
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.06);
+  margin: 0 auto;
+  margin-top: 0;
+  overflow: hidden;
+  font-size: 0.98rem;
+}
+.budget-table th, .budget-table td {
+  padding: 11px 12px;
+  text-align: left;
+}
+.budget-table th {
+  background: #f1f3fa;
+  color: #2d3480;
+  font-size: 0.97rem;
+  font-weight: 700;
+  border-bottom: 2px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.budget-table tr {
+  transition: background 0.2s;
+}
+.budget-table tr:hover {
+  background: #f5f6fa;
+}
+.budget-table td {
+  font-size: 0.97rem;
+  color: #444;
+  border-bottom: 1px solid #f1f1f1;
+}
+body, .budget-layout, .budget-main, .budget-table, .budget-filters, .budget-header, .budget-pagination {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 9px;
+  border: none;
+  margin-right: 8px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  box-shadow: none;
+  transition: filter 0.15s, box-shadow 0.15s;
+}
+.icon-btn.add {
+  background: #6C63FF;
+}
+.icon-btn.edit {
+  background: #363C44;
+}
+.icon-btn.delete {
+  background: #F55E5E;
+}
+.icon-btn svg, .icon-btn span {
+  color: #fff;
+  fill: #fff;
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.icon-btn:focus, .icon-btn:hover {
+  filter: brightness(0.93) drop-shadow(0 1px 3px #0001);
+}
+.icon-edit::before {
+  content: '\270E';
+  color: #fff;
+  font-size: 1.13em;
+  display: block;
+  text-align: center;
+}
+.icon-delete::before {
+  content: '\1F5D1';
+  color: #fff;
+  font-size: 1.13em;
+  display: block;
+  text-align: center;
+}
+
+.budget-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  border-top: 1px solid #e6e6e6;
+  margin-bottom: 8px;
+  button {
+    border: none;
+    background: #f5f6fa;
+    color: #6769c7;
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover {
+      background: #e6e8f3;
+    }
+  }
+  select {
+    min-width: 60px;
+  }
+}
+
+@media (max-width: 900px) {
+  .budget-layout {
+    flex-direction: column;
+  }
+  .budget-sidebar {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    box-shadow: none;
+  }
+  .budget-main {
+    padding: 0;
+  }
+  .budget-header, .budget-filters, .budget-pagination {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .budget-table th, .budget-table td {
+    padding: 8px 4px;
+  }
+}
