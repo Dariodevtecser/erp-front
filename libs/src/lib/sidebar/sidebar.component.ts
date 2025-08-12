@@ -29,7 +29,7 @@ export class SidebarComponent {
     {
       label: 'Macroprocesos',
       children: [
-        { label: 'Cuentas De Presupuesto', route: '/budget/macroprocesses/budget-accounts' },
+        { label: 'Cuentas De Presupuesto', route: '/app/budget/macroprocesses/budget-accounts' },
         // { label: 'Solicitudes de Disponibilidad', route: '/solicitudes-disponibilidad' },
         // { label: 'Certificados de Disponibilidad', route: '/certificados-disponibilidad' },
         // { label: 'Registros Presupuestales', route: '/registros-presupuestales' },
