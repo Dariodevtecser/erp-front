@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { SelectionService } from '../services/selection.service';
 
 @Component({
@@ -18,6 +18,16 @@ export class SidebarComponent {
   constructor(private router: Router, private selectionService: SelectionService) {
     this.selectionService.selectedModule$.subscribe(module => {
       this.selectedModule = module;
+    });
+
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        const path = this.router.url.split('?')[0];
+        if(path.endsWith('/home')){
+          this.selectedModule = null;
+          this.expandedMenu = null;
+        }
+      }
     })
   }
 

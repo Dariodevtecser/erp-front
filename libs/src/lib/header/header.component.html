@@ -4,9 +4,10 @@
       <i class="fas fa-bars"></i>
     </button>
     <nav class="breadcrumb">
-      <span class="breadcrumb-item muted">Home</span>
-      <span class="separator">&gt;</span>
-      <span *ngIf="selectedModule">{{ selectedModule }}</span>  
+      <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+        <span>{{ crumb }}</span>
+        <span *ngIf="!last"> &gt; </span>
+      </ng-container>
     </nav>
   </div>
 
