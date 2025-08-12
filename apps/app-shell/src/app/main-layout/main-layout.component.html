@@ -1,10 +1,10 @@
 <div class="layout-root">
   <div class="layout-body">
-    <lib-sidebar></lib-sidebar>
+    <lib-sidebar *ngIf="isSidebarOpen"></lib-sidebar>
     <div class="layout-main">
-      <lib-header></lib-header>
+      <lib-header (toggleSidebar)="toggleSidebar()"></lib-header>
       <div class="layout-content">
-        <router-outlet></router-outlet>
+        <router-outlet (cardSelected)="openSidebar()"></router-outlet>
       </div>
       <lib-footer></lib-footer>
     </div>

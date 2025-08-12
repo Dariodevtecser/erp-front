@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SelectionService } from '../services/selection.service';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
   imports: [CommonModule],
 })
 export class HeaderComponent {
+  @Output() toggleSidebar = new EventEmitter<void>();
   breadcrumbs: string[] = [];
   selectedModule: string | null = null;
 
@@ -31,7 +32,7 @@ export class HeaderComponent {
     })
   }
 
-  ngOnInit() {
+  ngOnInit(){
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)).subscribe(() => {
         const path = this.router.url.split('?')[0];
@@ -43,7 +44,7 @@ export class HeaderComponent {
       this.buildBreadcrumbs();
     }
     
-    buildBreadcrumbs() {
+    buildBreadcrumbs(){
       const path = this.router.url.split('?')[0];
       const segments = path.split('/').filter(seg => seg && seg !== 'app');
       let crumbs: string[] = [];
@@ -60,4 +61,12 @@ export class HeaderComponent {
           }
           this.breadcrumbs = crumbs;
         }
+
+    goHome(){
+      this.router.navigate(['/app/home']);
+    }
+
+    onMenuClick(){
+      this.toggleSidebar.emit();
+    }
 }

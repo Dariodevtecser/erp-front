@@ -106,4 +106,8 @@ export class SidebarComponent {
   logout() {
     // Implementa la lógica de logout aquí
   }
+
+  toggleSidebar(){
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 }
