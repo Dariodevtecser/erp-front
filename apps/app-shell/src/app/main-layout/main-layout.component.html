@@ -1,12 +1,12 @@
-<div class="layout-root">
-  <div class="layout-body">
-    <lib-sidebar></lib-sidebar>
-    <div class="layout-main">
-      <lib-header></lib-header>
-      <div class="layout-content">
+<div class="main-layout-container">
+  <lib-sidebar></lib-sidebar>
+  <div class="main-content">
+    <lib-header></lib-header>
+    <div class="main-scroll-area">
+      <main>
         <router-outlet></router-outlet>
-      </div>
-      <lib-footer></lib-footer>
+      </main>
     </div>
+    <lib-footer></lib-footer>
   </div>
 </div>

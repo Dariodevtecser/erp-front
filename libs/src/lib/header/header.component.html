@@ -1,6 +1,6 @@
 <header class="header-container">
   <div class="left-section">
-    <button class="menu-btn">
+    <button class="menu-btn" (click)="onMenuClick()">
       <i class="fas fa-bars"></i>
     </button>
     <nav class="breadcrumb">
@@ -12,7 +12,7 @@
   </div>
 
   <div class="right-section">
-    <div class="home">
+    <div class="home" (click)="goHome()" style="cursor:pointer;">
       <i class="fas fa-home"></i>
       <span>Home</span>
     </div>

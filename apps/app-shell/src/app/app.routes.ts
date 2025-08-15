@@ -2,12 +2,15 @@ import { Route } from '@angular/router';
 import { MainLayoutComponent } from '../app/main-layout/main-layout.component';
 import { LoginComponent } from './login/login/login.component';
 
+
 export const appRoutes: Route[] = [
   {
     path: '', component: LoginComponent
   },
   {
+
     path: 'app',
+
     component: MainLayoutComponent,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
