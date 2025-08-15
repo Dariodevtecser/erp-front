@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 export const appRoutes: Route[] = [
   {
@@ -8,7 +9,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: '',
-    // component: MainLayoutComponent,
+    component: MainLayoutComponent,
     children: [
       { path: 'home', loadComponent: () => import('@erp-frontend/home').then(m => m.HomeComponent) },
       { path: 'budget', loadChildren: () => import('./budget/budget.module').then(m => m.BudgetModule) },

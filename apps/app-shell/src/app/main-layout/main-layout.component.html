@@ -1,6 +1,12 @@
-<lib-header></lib-header>
-<lib-sidebar></lib-sidebar>
-<main>
-  <router-outlet></router-outlet>
-</main>
-<lib-footer></lib-footer>
+<div class="main-layout-container">
+  <lib-sidebar></lib-sidebar>
+  <div class="main-content">
+    <lib-header></lib-header>
+    <div class="main-scroll-area">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+    <lib-footer></lib-footer>
+  </div>
+</div>
