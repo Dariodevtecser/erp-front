@@ -1,17 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { FooterComponent } from '@erp-frontend/footer';
 import { HeaderComponent } from '@erp-frontend/header';
 import { SidebarComponent } from '../../../../../libs/src/lib/sidebar/sidebar.component';
-import { FooterComponent } from '@erp-frontend/footer';
+import { RouterModule } from '@angular/router';
+import { SidebarService } from '../../../../../libs/src/lib/services/sidebar.service';
 
 @Component({
-	selector: 'app-main-layout',
-    standalone: true,
-    imports: [CommonModule, RouterModule, HeaderComponent, SidebarComponent, FooterComponent],
-	templateUrl: './main-layout.component.html',
-	styleUrls: ['./main-layout.component.scss']
+  selector: 'app-main-layout',
+  imports: [CommonModule, FooterComponent, HeaderComponent, SidebarComponent, RouterModule],
+  templateUrl: './main-layout.component.html',
+  styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
-	// Puedes agregar lógica aquí
+  isSidebarOpen = true;
+
+  constructor(private sidebarService: SidebarService){
+    this.sidebarService.openSidebar$.subscribe(() => this.openSidebar());
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  openSidebar() {
+    this.isSidebarOpen = true;
+  }
 }

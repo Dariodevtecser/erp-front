@@ -1,6 +1,6 @@
 .home-layout {
   display: flex;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .home-container {
