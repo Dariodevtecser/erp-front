@@ -16,14 +16,16 @@ export class MainLayoutComponent {
   isSidebarOpen = true;
 
   constructor(private sidebarService: SidebarService){
-    this.sidebarService.openSidebar$.subscribe(() => this.openSidebar());
+    this.sidebarService.openSidebar$.subscribe(() => this.showSidebarOnCardClick());
   }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  openSidebar() {
-    this.isSidebarOpen = true;
+  showSidebarOnCardClick() {
+    if (!this.isSidebarOpen) {
+      this.isSidebarOpen = true;
+    }
   }
 }
