@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SidebarComponent } from '@erp-frontend/sidebar';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { SidebarComponent } from '@erp-frontend/sidebar'; 
 
 export interface BudgetAccount {
   id: string;
@@ -76,6 +76,8 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
   styleUrls: ['./budget-accounts.component.scss']
 })
 export class BudgetAccountsComponent {
+  // Formulario para crear/editar cuentas
+  accountForm!: FormGroup;
   accounts: BudgetAccount[] = BUDGET_ACCOUNTS_MOCK;
   filteredAccounts: BudgetAccount[] = [...BUDGET_ACCOUNTS_MOCK];
   search = '';
@@ -84,8 +86,478 @@ export class BudgetAccountsComponent {
   unidadEjecutora = '';
   tipoCuenta = '';
 
-  // Métodos para filtro y búsqueda se agregarán después
-  onAddAccount() {
-    // Aquí se abrirá el modal/wizard de creación de cuenta
+  // Modal properties
+  isModalOpen: boolean = false;
+  currentStep: any = 1;
+  isEditMode = false;
+  currentAccount: BudgetAccount | null = null;
+
+  // Variables para los controles de UI
+  showPagination = true;
+  showColumnSelector = false;
+  showExportOptions = false;
+  showOptions = false;
+  
+  // Columnas disponibles para mostrar/ocultar
+  availableColumns = [
+    { name: 'Opciones', visible: true },
+    { name: 'rubro', visible: true },
+    { name: 'nombre', visible: true },
+    { name: 'Gr Nombre', visible: true },
+    { name: 'nivel', visible: true },
+    { name: 'SF', visible: true },
+    { name: 'Cód.Producto', visible: true },
+    { name: 'grupo renta', visible: true },
+    { name: 'tipo renta', visible: true }
+  ];
+
+  // Options for dropdowns
+  tipoRentaOptions = [
+    { value: 'TRIBUTARIO', label: 'TRIBUTARIO' },
+    { value: 'NO TRIBUTARIO', label: 'NO TRIBUTARIO' },
+    { value: 'TRANSFERENCIAS', label: 'TRANSFERENCIAS' },
+    { value: 'RECURSOS DE CAPITAL', label: 'RECURSOS DE CAPITAL' }
+  ];
+
+  unidadOptions = [
+    { value: 'PESOS', label: 'PESOS' },
+    { value: 'PORCENTAJE', label: 'PORCENTAJE' },
+    { value: 'UNIDAD', label: 'UNIDAD' }
+  ];
+
+  grupoRentaOptions = [
+    { value: 'ICLD', label: 'ICLD' },
+    { value: 'ICDE', label: 'ICDE' },
+    { value: 'SGP', label: 'SGP' },
+    { value: 'REGALIAS', label: 'REGALIAS' },
+    { value: 'CREDITO', label: 'CREDITO' },
+    { value: 'COFINANCIACION', label: 'COFINANCIACION' }
+  ];
+
+  codigoHomologadoOptions = [
+    { value: '1001', label: 'CICP 1001' },
+    { value: '1002', label: 'CICP 1002' },
+    { value: '1003', label: 'CICP 1003' }
+  ];
+
+  // Step 2 options
+  tipoIngresoOptions = [
+    { value: 'ingreso1', label: 'Tipo Ingreso 1' },
+    { value: 'ingreso2', label: 'Tipo Ingreso 2' }
+  ];
+
+  tipoCuentaBancariaOptions = [
+    { value: 'ahorros', label: 'Ahorros' },
+    { value: 'corriente', label: 'Corriente' }
+  ];
+
+  bancoOptions = [
+    { value: 'banco1', label: 'Banco 1' },
+    { value: 'banco2', label: 'Banco 2' }
+  ];
+
+  tipoDocumentoOptions = [
+    { value: 'cc', label: 'Cédula de Ciudadanía' },
+    { value: 'nit', label: 'NIT' }
+  ];
+
+  tipoPersonaOptions = [
+    { value: 'natural', label: 'Persona Natural' },
+    { value: 'juridica', label: 'Persona Jurídica' }
+  ];
+
+  // Step 3 options
+  tipoFutOptions = [
+    { value: 'fut1', label: 'FUT Opción 1' },
+    { value: 'fut2', label: 'FUT Opción 2' }
+  ];
+
+  tipoFffutOptions = [
+    { value: 'fffut1', label: 'FFFUT Opción 1' },
+    { value: 'fffut2', label: 'FFFUT Opción 2' }
+  ];
+
+  tipoFutiOptions = [
+    { value: 'futi1', label: 'FUTI Opción 1' },
+    { value: 'futi2', label: 'FUTI Opción 2' }
+  ];
+
+  // Step 4 options
+  cuentaTipoNormaOptions = [
+    { value: 'norma1', label: 'Cuenta Norma 1' },
+    { value: 'norma2', label: 'Cuenta Norma 2' }
+  ];
+
+  cuipoCpcOptions = [
+    { value: 'cpc1', label: 'CUIPO CPC 1' },
+    { value: 'cpc2', label: 'CUIPO CPC 2' }
+  ];
+
+  cuipoFuenteFinanciacionOptions = [
+    { value: 'fuente1', label: 'Fuente Financiación 1' },
+    { value: 'fuente2', label: 'Fuente Financiación 2' }
+  ];
+
+  cuipoTerceroChipOptions = [
+    { value: 'chip1', label: 'Tercero CHIP 1' },
+    { value: 'chip2', label: 'Tercero CHIP 2' }
+  ];
+
+  cuipoPoliticaPublicaOptions = [
+    { value: 'politica1', label: 'Política Pública 1' },
+    { value: 'politica2', label: 'Política Pública 2' }
+  ];
+
+  cuipoDetalleSectorialPiOptions = [
+    { value: 'sectorial1', label: 'Detalle Sectorial PI 1' },
+    { value: 'sectorial2', label: 'Detalle Sectorial PI 2' }
+  ];
+
+  cuipoDetalleSectorialEiOptions = [
+    { value: 'sectorialei1', label: 'Detalle Sectorial EI 1' },
+    { value: 'sectorialei2', label: 'Detalle Sectorial EI 2' }
+  ];
+
+  homologadoIcldOptions = [
+    { value: 'icld1', label: 'Homologado ICLD 1' },
+    { value: 'icld2', label: 'Homologado ICLD 2' }
+  ];
+
+  constructor(private fb: FormBuilder) {
+    this.accountForm = this.fb.group({
+      // Paso 1: Datos Generales
+      rubro: ['', [
+        Validators.required, 
+        Validators.maxLength(200),
+        this.rubroUniqueValidator.bind(this)
+      ]],
+      nombre: ['', [
+        Validators.required,
+        Validators.maxLength(200)
+      ]],
+      nivel: ['', [
+        Validators.required, 
+        Validators.min(1),
+        Validators.maxLength(200),
+        Validators.pattern('^[a-zA-Z0-9]*$') // Alfanumérico
+      ]],
+      tipoRenta: ['', Validators.required],
+      unidad: ['', Validators.required],
+      grupoRenta: ['', Validators.required],
+      codigoHomologado: ['', [
+        Validators.required,
+        Validators.maxLength(10),
+        this.codigoUniqueValidator.bind(this)
+      ]],
+      
+      // Paso 2: Enlaces Sifse y SIA
+      cuentaIngresos: [''],
+      cuentaBancos: [''],
+      cuentaCausacionIngresos: [''],
+      tipoIngreso: [''],
+      codigoSubfijoSia: [''],
+      codigoCuentaSia: [''],
+      tipoCuentaBancaria: [''],
+      banco: [''],
+      numeroCuenta: [''],
+      tipoDocumento: [''],
+      numeroDocumento: [''],
+      tipoPersona: [''],
+      nombreTitular: [''],
+      descripcion: [''],
+      
+      // Paso 3: Enlaces CGR y FUT
+      fut: [''],
+      fffut: [''],
+      futi: [''],
+      
+      // Paso 4: Enlaces CCPET
+      cuentaTipoNorma: [''],
+      cuipoNumeroFecha: [''],
+      cuipoCpc: [''],
+      cuipoFuenteFinanciacion: [''],
+      cuipoTerceroChip: [''],
+      cuipoPoliticaPublica: [''],
+      cuipoDetalleSectorialPi: [''],
+      cuipoDetalleSectorialEi: [''],
+      homologadoIcld: ['']
+    });
+  }
+
+  onAddAccount(): void {
+    this.isModalOpen = true;
+    this.currentStep = 1;
+    this.accountForm.reset();
+    this.isEditMode = false;
+    this.currentAccount = null;
+  }
+
+  onEditAccount(account: BudgetAccount): void {
+    this.isModalOpen = true;
+    this.currentStep = 1;
+    this.isEditMode = true;
+    this.currentAccount = account;
+    
+    // Cargar los datos del rubro en el formulario
+    this.accountForm.patchValue({
+      rubro: account.rubro,
+      nombre: account.nombre,
+      nivel: account.nivel,
+      tipoRenta: account.tipoRenta,
+      unidad: account.unidadEjecutora,
+      grupoRenta: account.grupoRenta,
+      codigoHomologado: account.codigoHomologado,
+      // Aquí puedes agregar más campos según sea necesario
+    });
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.currentStep = 1;
+    this.accountForm.reset();
+    this.isEditMode = false;
+    this.currentAccount = null;
+  }
+
+  // Métodos para los botones de acción
+  clearSearch(): void {
+    this.search = '';
+    this.filterAccounts();
+  }
+  
+  clearAllFilters(): void {
+    this.search = '';
+    this.vigencia = 2025;
+    this.tipoPresupuesto = '';
+    this.unidadEjecutora = '';
+    this.tipoCuenta = '';
+    this.filterAccounts();
+  }
+  
+  filterAccounts(): void {
+    // Comenzamos con todas las cuentas
+    let filtered = [...this.accounts];
+    
+    // Aplicamos filtro de búsqueda por texto
+    if (this.search && this.search.trim() !== '') {
+      const searchTerm = this.search.toLowerCase().trim();
+      filtered = filtered.filter(account => 
+        account.rubro.toLowerCase().includes(searchTerm) ||
+        account.nombre.toLowerCase().includes(searchTerm) ||
+        account.codigoHomologado.toLowerCase().includes(searchTerm) ||
+        account.grupoRenta.toLowerCase().includes(searchTerm) ||
+        account.tipoRenta.toLowerCase().includes(searchTerm)
+      );
+    }
+    
+    // Aplicamos filtro de tipo de presupuesto
+    if (this.tipoPresupuesto) {
+      filtered = filtered.filter(account => account.tipoPresupuesto === this.tipoPresupuesto);
+    }
+    
+    // Aplicamos filtro de unidad ejecutora
+    if (this.unidadEjecutora) {
+      filtered = filtered.filter(account => account.unidadEjecutora === this.unidadEjecutora);
+    }
+    
+    // Aplicamos filtro de tipo de cuenta
+    if (this.tipoCuenta) {
+      filtered = filtered.filter(account => account.tipoCuenta === this.tipoCuenta);
+    }
+    
+    // Actualizamos la lista filtrada
+    this.filteredAccounts = filtered;
+  }
+
+  togglePagination(): void {
+    this.showPagination = !this.showPagination;
+  }
+
+  toggleColumnSelector(): void {
+    this.showColumnSelector = !this.showColumnSelector;
+    this.showExportOptions = false;
+    this.showOptions = false;
+  }
+
+  toggleExportOptions(): void {
+    this.showExportOptions = !this.showExportOptions;
+    this.showColumnSelector = false;
+    this.showOptions = false;
+  }
+
+  toggleOptions(): void {
+    this.showOptions = !this.showOptions;
+    this.showColumnSelector = false;
+    this.showExportOptions = false;
+  }
+
+  exportData(format: string): void {
+    // Implementación para exportar datos
+    console.log(`Exportando datos en formato ${format}`);
+    
+    // Aquí iría la lógica para exportar los datos según el formato
+    // Por ejemplo, para Excel podríamos usar una librería como xlsx
+    const dataToExport = this.filteredAccounts.map(account => {
+      return {
+        rubro: account.rubro,
+        nombre: account.nombre,
+        nivel: account.nivel,
+        tipoRenta: account.tipoRenta,
+        grupoRenta: account.grupoRenta,
+        codigoHomologado: account.codigoHomologado,
+        unidadEjecutora: account.unidadEjecutora
+      };
+    });
+    
+    // Cerrar el menú de exportación
+    this.showExportOptions = false;
+  }
+
+  printData(): void {
+    // Implementación para imprimir datos
+    console.log('Imprimiendo datos');
+    
+    // Aquí iría la lógica para imprimir los datos
+    // Por ejemplo, podríamos abrir una nueva ventana con los datos formateados para imprimir
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write('<html><head><title>Catálogo de Cuentas</title>');
+      printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</style>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write('<h1>Catálogo de Cuentas</h1>');
+      printWindow.document.write('<table>');
+      printWindow.document.write('<tr><th>Rubro</th><th>Nombre</th><th>Nivel</th><th>Tipo Renta</th><th>Grupo Renta</th><th>Código Homologado</th><th>Unidad Ejecutora</th></tr>');
+      
+      this.filteredAccounts.forEach(account => {
+        printWindow.document.write(`<tr><td>${account.rubro}</td><td>${account.nombre}</td><td>${account.nivel}</td><td>${account.tipoRenta}</td><td>${account.grupoRenta}</td><td>${account.codigoHomologado}</td><td>${account.unidadEjecutora}</td></tr>`);
+      });
+      
+      printWindow.document.write('</table>');
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+    }
+  }
+
+  nextStep(): void {
+    switch (this.currentStep) {
+      case 1:
+        this.currentStep = 2;
+        break;
+      case 2:
+        this.currentStep = 3;
+        break;
+      case 3:
+        this.currentStep = 4;
+        break;
+    }
+  }
+
+  previousStep(): void {
+    switch (this.currentStep) {
+      case 2:
+        this.currentStep = 1;
+        break;
+      case 3:
+        this.currentStep = 2;
+        break;
+      case 4:
+        this.currentStep = 3;
+        break;
+    }
+  }
+
+  saveAccount(): void {
+    if (this.accountForm.valid) {
+      const formData = this.accountForm.value;
+      
+      if (this.isEditMode && this.currentAccount) {
+        // Actualizar el rubro existente
+        const currentId = this.currentAccount.id;
+        if (currentId) {
+          const index = this.accounts.findIndex(acc => acc.id === currentId);
+          if (index !== -1) {
+          // Actualizar los datos del rubro
+          this.accounts[index] = {
+            ...this.accounts[index],
+            ...formData,
+            fechaModificacion: new Date().toISOString().split('T')[0],
+            usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
+          };
+          
+          // Actualizar la lista filtrada
+          this.filteredAccounts = [...this.accounts];
+          console.log('Rubro actualizado:', this.accounts[index]);
+          }
+        }
+      } else {
+        // Crear un nuevo rubro
+        const newAccount: BudgetAccount = {
+          id: (this.accounts.length + 1).toString(),
+          vigencia: this.vigencia,
+          tipoPresupuesto: this.tipoPresupuesto || 'Ingresos',
+          unidadEjecutora: formData.unidad,
+          tipoCuenta: 'ingreso',
+          rubro: formData.rubro,
+          nombre: formData.nombre,
+          codigo: formData.rubro, // Usar el rubro como código por defecto
+          nivel: formData.nivel,
+          tipoRenta: formData.tipoRenta,
+          grupoRenta: formData.grupoRenta,
+          codigoHomologado: formData.codigoHomologado,
+          sf: '',
+          codigoProducto: '',
+          activo: true,
+          fechaCreacion: new Date().toISOString().split('T')[0],
+          fechaModificacion: new Date().toISOString().split('T')[0],
+          usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
+        };
+        
+        this.accounts.push(newAccount);
+        this.filteredAccounts = [...this.accounts];
+        console.log('Nuevo rubro creado:', newAccount);
+      }
+      
+      this.closeModal();
+    } else {
+      // Marcar campos como touched para mostrar errores
+      Object.keys(this.accountForm.controls).forEach(key => {
+        this.accountForm.get(key)?.markAsTouched();
+      });
+    }
+  }
+
+  // Validador personalizado para verificar unicidad del rubro
+  rubroUniqueValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+    
+    // Si estamos en modo edición y el valor es igual al rubro actual, no hay error
+    if (this.isEditMode && this.currentAccount && this.currentAccount.rubro === value) {
+      return null;
+    }
+    
+    // Verificar si el rubro ya existe en la lista de cuentas
+    const exists = this.accounts.some(account => account.rubro === value);
+    return exists ? { rubroExists: true } : null;
+  }
+
+  // Validador personalizado para verificar unicidad del código
+  codigoUniqueValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+    
+    // Si estamos en modo edición y el valor es igual al código actual, no hay error
+    if (this.isEditMode && this.currentAccount && this.currentAccount.codigoHomologado && this.currentAccount.codigoHomologado === value) {
+      return null;
+    }
+    
+    // Verificar si el código ya existe en la lista de cuentas
+    const exists = this.accounts.some(account => account.codigoHomologado === value);
+    return exists ? { codigoExists: true } : null;
+  }
+
+  exitWizard(): void {
+    this.closeModal();
   }
 }
