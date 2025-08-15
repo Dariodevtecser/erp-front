@@ -2,7 +2,6 @@ import { FooterComponent } from './../footer/footer.component';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
-import { FooterComponent } from '../footer/footer.component';
 import { SelectionService } from '../services/selection.service';
 import { Router } from '@angular/router';
 import { SidebarService } from '../services/sidebar.service';
@@ -54,11 +53,11 @@ export class HomeComponent {
     const noFavoritos = this.originalModulos.filter(m => !this.favoritos.includes(m.title));
     this.modulos = [...favoritos, ...noFavoritos];
   }
-  
+
   isFavorite(modulo: any): boolean {
     return this.favoritos.includes(modulo.title);
   }
-  
+
   isSelected(modulo: any): boolean {
     return this.selectedCard === modulo.title;
   }
