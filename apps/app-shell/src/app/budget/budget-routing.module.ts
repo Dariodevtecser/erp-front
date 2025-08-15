@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BudgetComponent } from './budget.component';
+import { BudgetAccountsComponent } from './macroprocesses/budget-accounts/budget-accounts.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: BudgetComponent,
+    component: BudgetAccountsComponent,
     children: [
         {
             path: 'macroprocesses',
