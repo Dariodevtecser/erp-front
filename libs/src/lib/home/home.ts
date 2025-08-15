@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { FooterComponent } from './../footer/footer.component';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SelectionService } from '../services/selection.service';
 import { Router } from '@angular/router';
+import { SidebarService } from '../services/sidebar.service';
 
 @Component({
   selector: 'lib-home',
@@ -13,8 +15,9 @@ import { Router } from '@angular/router';
   styleUrl: './home.css',
 })
 export class HomeComponent {
+  @Output() select = new EventEmitter<void>();
 
-  constructor(private selectionService: SelectionService, private router: Router) {}
+  constructor(private selectionService: SelectionService, private router: Router, private SidebarService: SidebarService) {}
   originalModulos = [
     { title: 'Contabilidad', icon: 'fas fa-calculator', route: '/contabilidad' },
     { title: 'Presupuesto', icon: 'fas fa-donate', route: '/presupuesto' },
@@ -33,6 +36,7 @@ export class HomeComponent {
   onSelect(modulo: any) {
     this.selectedCard = modulo.title;
     this.selectionService.setSelectedModule(modulo.title);
+    this.SidebarService.openSidebar();
   }
 
   onFavorite(modulo: any) {
@@ -50,12 +54,17 @@ export class HomeComponent {
     const noFavoritos = this.originalModulos.filter(m => !this.favoritos.includes(m.title));
     this.modulos = [...favoritos, ...noFavoritos];
   }
+  
+  isFavorite(modulo: any): boolean {
+    return this.favoritos.includes(modulo.title);
+  }
+  
+  isSelected(modulo: any): boolean {
+    return this.selectedCard === modulo.title;
+  }
 
-isFavorite(modulo: any): boolean {
-  return this.favoritos.includes(modulo.title);
-}
-
-isSelected(modulo: any): boolean {
-  return this.selectedCard === modulo.title;
+  onCardClick(event: MouseEvent) {
+  if ((event.target as HTMLElement).closest('.favorite-button')) return;
+  this.select.emit();
 }
 }

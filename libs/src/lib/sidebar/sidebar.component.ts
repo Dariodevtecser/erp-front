@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { SelectionService } from '../services/selection.service';
 
 @Component({
@@ -18,6 +18,16 @@ export class SidebarComponent {
   constructor(private router: Router, private selectionService: SelectionService) {
     this.selectionService.selectedModule$.subscribe(module => {
       this.selectedModule = module;
+    });
+
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        const path = this.router.url.split('?')[0];
+        if(path.endsWith('/home')){
+          this.selectedModule = null;
+          this.expandedMenu = null;
+        }
+      }
     })
   }
 
@@ -29,7 +39,7 @@ export class SidebarComponent {
     {
       label: 'Macroprocesos',
       children: [
-        { label: 'Cuentas De Presupuesto', route: '/budget/macroprocesses/budget-accounts' },
+        { label: 'Cuentas De Presupuesto', route: '/app/budget/macroprocesses/budget-accounts' },
         // { label: 'Solicitudes de Disponibilidad', route: '/solicitudes-disponibilidad' },
         // { label: 'Certificados de Disponibilidad', route: '/certificados-disponibilidad' },
         // { label: 'Registros Presupuestales', route: '/registros-presupuestales' },
@@ -95,5 +105,9 @@ export class SidebarComponent {
 
   logout() {
     // Implementa la lógica de logout aquí
+  }
+
+  toggleSidebar(){
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }
