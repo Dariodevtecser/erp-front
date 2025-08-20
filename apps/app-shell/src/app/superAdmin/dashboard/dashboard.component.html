@@ -27,24 +27,37 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios; let i = index" [class.row-selected]="i === 5">
-          <td>{{ usuario.cedula }}</td>
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.correo }}</td>
-          <td>{{ usuario.rol }}</td>
-          <td>{{ usuario.cargo }}</td>
-          <td>
-            <button class="icon-btn" title="Editar" (click)="editarUsuario(usuario.cedula)">
-              <!-- Lapiz SVG -->
-              <svg width="20" height="20" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l4 4L6 16H2v-4L12 2z"/></svg>
-            </button>
-            <button class="icon-btn" title="Deshabilitar">
-              <!-- X roja SVG -->
-              <svg width="20" height="20" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><line x1="7" y1="7" x2="13" y2="13"/><line x1="13" y1="7" x2="7" y2="13"/></svg>
-            </button>
-          </td>
-        </tr>
-      </tbody>
+  <tr *ngFor="let usuario of usuarios; let i = index" [class.row-selected]="i === 5" [class.deshabilitado]="!usuario.activo">
+    <td>{{ usuario.cedula }}</td>
+    <td>{{ usuario.nombre }}</td>
+    <td>{{ usuario.correo }}</td>
+    <td>{{ usuario.rol }}</td>
+    <td>{{ usuario.cargo }}</td>
+    <td>
+  <button class="icon-btn" title="Editar" (click)="editarUsuario(usuario.cedula)">
+    <!-- Lapiz SVG -->
+    <svg width="20" height="20" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l4 4L6 16H2v-4L12 2z"/></svg>
+  </button>
+  <!-- Botón para deshabilitar -->
+  <button class="icon-btn" title="Deshabilitar" *ngIf="usuario.activo" (click)="abrirModalDesactivar(usuario)">
+    <!-- X roja SVG -->
+    <svg width="20" height="20" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8"/>
+      <line x1="7" y1="7" x2="13" y2="13"/>
+      <line x1="13" y1="7" x2="7" y2="13"/>
+    </svg>
+  </button>
+  <!-- Botón para activar -->
+  <button class="icon-btn" title="Activar" *ngIf="!usuario.activo" (click)="abrirModalActivar(usuario)">
+    <!-- Chulito verde SVG -->
+    <svg width="20" height="20" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8"/>
+      <polyline points="6 11 9 14 14 8"/>
+    </svg>
+  </button>
+</td>
+  </tr>
+</tbody>
     </table>
     <div class="usuarios-pagination">
       <span>1 - {{ usuarios.length }} de {{ usuarios.length }} páginas</span>
@@ -59,3 +72,13 @@
     </div>
   </div>
 </div>
+<app-modal
+  [visible]="showModal"
+  [title]="modalTitle"
+  [message]="modalMessage"
+  [userName]="selectedUser?.nombre"
+  [userId]="selectedUser?.cedula"
+  (confirm)="onConfirm()"
+  (cancel)="onCancel()"
+  (close)="onClose()"
+></app-modal>
