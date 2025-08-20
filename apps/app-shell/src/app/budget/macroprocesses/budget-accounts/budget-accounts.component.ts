@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SidebarComponent } from '@erp-frontend/sidebar'; 
+import Swal from 'sweetalert2';
 
 export interface BudgetAccount {
   id: string;
@@ -22,6 +23,8 @@ export interface BudgetAccount {
   fechaCreacion: string;
   fechaModificacion: string;
   usuarioModificacion: string;
+  showDetails?: boolean; // Propiedad para controlar la visibilidad del acordeón
+  grupoNombre?: string; // Propiedad opcional para el grupo de nombre
 }
 
 const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
@@ -29,7 +32,7 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
     id: '1',
     vigencia: 2025,
     tipoPresupuesto: 'Ingresos',
-    unidadEjecutora: 'Secretaría de Hacienda',
+    unidadEjecutora: '01',
     tipoCuenta: 'ingreso',
     rubro: '1',
     nombre: 'Ingresos',
@@ -49,7 +52,7 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
     id: '2',
     vigencia: 2025,
     tipoPresupuesto: 'Ingresos',
-    unidadEjecutora: 'Secretaría de Hacienda',
+    unidadEjecutora: '01',
     tipoCuenta: 'ingreso',
     rubro: '1.0',
     nombre: 'Disponibilidad Inicial',
@@ -78,23 +81,22 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
 export class BudgetAccountsComponent {
   // Formulario para crear/editar cuentas
   accountForm!: FormGroup;
-  accounts: BudgetAccount[] = BUDGET_ACCOUNTS_MOCK;
-  filteredAccounts: BudgetAccount[] = [...BUDGET_ACCOUNTS_MOCK];
+  accounts = BUDGET_ACCOUNTS_MOCK;
+  filteredAccounts = [...this.accounts];
   search = '';
   vigencia = 2025;
   tipoPresupuesto = '';
   unidadEjecutora = '';
   tipoCuenta = '';
-
-  // Modal properties
-  isModalOpen: boolean = false;
-  currentStep: any = 1;
+  
+  isModalOpen = false;
   isEditMode = false;
   currentAccount: BudgetAccount | null = null;
-
-  // Variables para los controles de UI
+  currentStep = 1;
   showPagination = true;
   showColumnSelector = false;
+  showDeleteConfirmation = false;
+  accountToDelete: BudgetAccount | null = null;
   showExportOptions = false;
   showOptions = false;
   
@@ -224,6 +226,9 @@ export class BudgetAccountsComponent {
   ];
 
   constructor(private fb: FormBuilder) {
+    // Cargar cuentas desde localStorage si existen
+    this.loadAccountsFromLocalStorage();
+    
     this.accountForm = this.fb.group({
       // Paso 1: Datos Generales
       rubro: ['', [
@@ -312,6 +317,29 @@ export class BudgetAccountsComponent {
   }
 
   closeModal(): void {
+    // Verificar si el formulario tiene cambios sin guardar
+    if (this.accountForm.dirty) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Hay cambios sin guardar. Si cierras el formulario, se perderán estos cambios.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.resetModalState();
+        }
+      });
+    } else {
+      this.resetModalState();
+    }
+  }
+  
+  // Método para resetear el estado del modal
+  private resetModalState(): void {
     this.isModalOpen = false;
     this.currentStep = 1;
     this.accountForm.reset();
@@ -324,7 +352,7 @@ export class BudgetAccountsComponent {
     this.search = '';
     this.filterAccounts();
   }
-  
+
   clearAllFilters(): void {
     this.search = '';
     this.vigencia = 2025;
@@ -335,10 +363,10 @@ export class BudgetAccountsComponent {
   }
   
   filterAccounts(): void {
-    // Comenzamos con todas las cuentas
+    // Primero filtramos por término de búsqueda
     let filtered = [...this.accounts];
     
-    // Aplicamos filtro de búsqueda por texto
+    // Filtro por término de búsqueda
     if (this.search && this.search.trim() !== '') {
       const searchTerm = this.search.toLowerCase().trim();
       filtered = filtered.filter(account => 
@@ -350,22 +378,21 @@ export class BudgetAccountsComponent {
       );
     }
     
-    // Aplicamos filtro de tipo de presupuesto
+    // Filtro por tipo de presupuesto
     if (this.tipoPresupuesto) {
       filtered = filtered.filter(account => account.tipoPresupuesto === this.tipoPresupuesto);
     }
     
-    // Aplicamos filtro de unidad ejecutora
+    // Filtro por unidad ejecutora
     if (this.unidadEjecutora) {
       filtered = filtered.filter(account => account.unidadEjecutora === this.unidadEjecutora);
     }
     
-    // Aplicamos filtro de tipo de cuenta
+    // Filtro por tipo de cuenta (ingreso/gasto)
     if (this.tipoCuenta) {
       filtered = filtered.filter(account => account.tipoCuenta === this.tipoCuenta);
     }
     
-    // Actualizamos la lista filtrada
     this.filteredAccounts = filtered;
   }
 
@@ -471,60 +498,176 @@ export class BudgetAccountsComponent {
     if (this.accountForm.valid) {
       const formData = this.accountForm.value;
       
-      if (this.isEditMode && this.currentAccount) {
-        // Actualizar el rubro existente
-        const currentId = this.currentAccount.id;
-        if (currentId) {
-          const index = this.accounts.findIndex(acc => acc.id === currentId);
-          if (index !== -1) {
-          // Actualizar los datos del rubro
-          this.accounts[index] = {
-            ...this.accounts[index],
-            ...formData,
+      // Mostrar indicador de carga
+      Swal.fire({
+        title: 'Guardando...',
+        text: 'Por favor espere mientras se guarda la información',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      
+      // Simulamos un tiempo de procesamiento (esto se eliminaría cuando se conecte al backend)
+      setTimeout(() => {
+        if (this.isEditMode && this.currentAccount) {
+          // Actualizar el rubro existente
+          const currentId = this.currentAccount.id;
+          if (currentId) {
+            const index = this.accounts.findIndex(acc => acc.id === currentId);
+            if (index !== -1) {
+              // Actualizar los datos del rubro
+              this.accounts[index] = {
+                ...this.accounts[index],
+                ...formData,
+                fechaModificacion: new Date().toISOString().split('T')[0],
+                usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
+              };
+              
+              // Actualizar la lista filtrada
+              this.filteredAccounts = [...this.accounts];
+              console.log('Rubro actualizado:', this.accounts[index]);
+              
+              // Guardar cuentas en localStorage
+              this.saveAccountsToLocalStorage();
+              
+              // Mostrar notificación de éxito
+              Swal.fire({
+                title: '¡Actualizado!',
+                text: `La cuenta ${formData.rubro} ha sido actualizada correctamente.`,
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#3085d6'
+              });
+            }
+          }
+        } else {
+          // Crear un nuevo rubro
+          const newAccount: BudgetAccount = {
+            id: (this.accounts.length + 1).toString(),
+            vigencia: this.vigencia,
+            tipoPresupuesto: this.tipoPresupuesto || 'Ingresos',
+            unidadEjecutora: formData.unidad,
+            tipoCuenta: 'ingreso',
+            rubro: formData.rubro,
+            nombre: formData.nombre,
+            codigo: formData.rubro, // Usar el rubro como código por defecto
+            nivel: formData.nivel,
+            tipoRenta: formData.tipoRenta,
+            grupoRenta: formData.grupoRenta,
+            codigoHomologado: formData.codigoHomologado,
+            sf: '',
+            codigoProducto: '',
+            activo: true,
+            fechaCreacion: new Date().toISOString().split('T')[0],
             fechaModificacion: new Date().toISOString().split('T')[0],
             usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
           };
           
-          // Actualizar la lista filtrada
+          this.accounts.push(newAccount);
           this.filteredAccounts = [...this.accounts];
-          console.log('Rubro actualizado:', this.accounts[index]);
-          }
+          console.log('Nuevo rubro creado:', newAccount);
+          
+          // Guardar cuentas en localStorage
+          this.saveAccountsToLocalStorage();
+          
+          // Mostrar notificación de éxito
+          Swal.fire({
+            title: '¡Guardado!',
+            text: `La cuenta ${formData.rubro} ha sido creada correctamente.`,
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3085d6'
+          });
         }
-      } else {
-        // Crear un nuevo rubro
-        const newAccount: BudgetAccount = {
-          id: (this.accounts.length + 1).toString(),
-          vigencia: this.vigencia,
-          tipoPresupuesto: this.tipoPresupuesto || 'Ingresos',
-          unidadEjecutora: formData.unidad,
-          tipoCuenta: 'ingreso',
-          rubro: formData.rubro,
-          nombre: formData.nombre,
-          codigo: formData.rubro, // Usar el rubro como código por defecto
-          nivel: formData.nivel,
-          tipoRenta: formData.tipoRenta,
-          grupoRenta: formData.grupoRenta,
-          codigoHomologado: formData.codigoHomologado,
-          sf: '',
-          codigoProducto: '',
-          activo: true,
-          fechaCreacion: new Date().toISOString().split('T')[0],
-          fechaModificacion: new Date().toISOString().split('T')[0],
-          usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
-        };
         
-        this.accounts.push(newAccount);
-        this.filteredAccounts = [...this.accounts];
-        console.log('Nuevo rubro creado:', newAccount);
-      }
-      
-      this.closeModal();
+        this.closeModal();
+      }, 1000); // Simulamos 1 segundo de procesamiento
     } else {
-      // Marcar campos como touched para mostrar errores
+      // Identificar campos con errores
+      const camposConError: string[] = [];
+      
       Object.keys(this.accountForm.controls).forEach(key => {
-        this.accountForm.get(key)?.markAsTouched();
+        const control = this.accountForm.get(key);
+        if (control?.invalid && (control?.dirty || control?.touched)) {
+          camposConError.push(this.getFieldName(key));
+        }
+        control?.markAsTouched();
+      });
+      
+      // Mostrar notificación de error con campos específicos
+      Swal.fire({
+        title: 'Error de validación',
+        html: `<p>Por favor, complete correctamente los siguientes campos:</p>
+              <ul>
+                ${camposConError.map(campo => `<li>${campo}</li>`).join('')}
+              </ul>`,
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#d33'
       });
     }
+  }
+  
+  // Método auxiliar para obtener nombres legibles de los campos
+  private getFieldName(fieldKey: string): string {
+    const fieldNames: {[key: string]: string} = {
+      'rubro': 'Rubro',
+      'nombre': 'Nombre',
+      'nivel': 'Nivel',
+      'tipoRenta': 'Tipo de Renta',
+      'unidad': 'Unidad',
+      'grupoRenta': 'Grupo de Renta',
+      'codigoHomologado': 'Código Homologado'
+      // Añadir más campos según sea necesario
+    };
+    
+    return fieldNames[fieldKey] || fieldKey;
+  }
+  
+  // Métodos para mostrar mensajes de error específicos en el formulario
+  getErrorMessage(controlName: string): string {
+    const control = this.accountForm.get(controlName);
+    if (!control || !control.errors || !control.touched) return '';
+    
+    const errors = control.errors;
+    
+    if (errors['required']) {
+      return `El campo ${this.getFieldName(controlName)} es obligatorio`;
+    }
+    
+    if (errors['rubroExists']) {
+      return `El rubro ya existe en el sistema`;
+    }
+    
+    if (errors['codigoExists']) {
+      return `El código homologado ya existe en el sistema`;
+    }
+    
+    if (errors['pattern']) {
+      return `El formato del campo ${this.getFieldName(controlName)} no es válido`;
+    }
+    
+    if (errors['minlength']) {
+      return `El campo debe tener al menos ${errors['minlength'].requiredLength} caracteres`;
+    }
+    
+    if (errors['maxlength']) {
+      return `El campo no puede tener más de ${errors['maxlength'].requiredLength} caracteres`;
+    }
+    
+    if (errors['min']) {
+      return `El valor debe ser mayor o igual a ${errors['min'].min}`;
+    }
+    
+    // Si hay un error pero no está contemplado en los casos anteriores
+    return 'Campo inválido';
+  }
+  
+  // Método para verificar si un campo tiene error
+  hasError(controlName: string): boolean {
+    const control = this.accountForm.get(controlName);
+    return control ? (control.invalid && control.touched) : false;
   }
 
   // Validador personalizado para verificar unicidad del rubro
@@ -541,14 +684,14 @@ export class BudgetAccountsComponent {
     const exists = this.accounts.some(account => account.rubro === value);
     return exists ? { rubroExists: true } : null;
   }
-
-  // Validador personalizado para verificar unicidad del código
+  
+  // Validador personalizado para verificar unicidad del código homologado
   codigoUniqueValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
     
     // Si estamos en modo edición y el valor es igual al código actual, no hay error
-    if (this.isEditMode && this.currentAccount && this.currentAccount.codigoHomologado && this.currentAccount.codigoHomologado === value) {
+    if (this.isEditMode && this.currentAccount && this.currentAccount.codigoHomologado === value) {
       return null;
     }
     
@@ -556,8 +699,84 @@ export class BudgetAccountsComponent {
     const exists = this.accounts.some(account => account.codigoHomologado === value);
     return exists ? { codigoExists: true } : null;
   }
+  
+  // Método para guardar cuentas en localStorage
+  private saveAccountsToLocalStorage(): void {
+    try {
+      localStorage.setItem('budgetAccounts', JSON.stringify(this.accounts));
+      console.log('Cuentas guardadas en localStorage:', this.accounts.length);
+    } catch (error) {
+      console.error('Error al guardar cuentas en localStorage:', error);
+    }
+  }
+  
+  // Método para cargar cuentas desde localStorage
+  private loadAccountsFromLocalStorage(): void {
+    const savedAccounts = localStorage.getItem('budgetAccounts');
+    if (savedAccounts) {
+      try {
+        this.accounts = JSON.parse(savedAccounts);
+        console.log('Cuentas cargadas desde localStorage:', this.accounts.length);
+      } catch (error) {
+        console.error('Error al cargar cuentas desde localStorage:', error);
+      }
+    }
+  }
 
   exitWizard(): void {
     this.closeModal();
+  }
+  
+  /**
+   * Método para controlar la apertura/cierre del acordeón
+   * @param account La cuenta presupuestal a mostrar/ocultar detalles
+   */
+  toggleAccordion(account: BudgetAccount): void {
+    account.showDetails = !account.showDetails;
+  }
+  
+  /**
+   * Método para mostrar el modal de confirmación de eliminación
+   * @param account La cuenta presupuestal a eliminar
+   */
+  onDeleteAccount(account: BudgetAccount): void {
+    this.accountToDelete = account;
+    this.showDeleteConfirmation = true;
+  }
+  
+  /**
+   * Método para confirmar la eliminación de una cuenta
+   */
+  confirmDelete(): void {
+    if (this.accountToDelete) {
+      // Eliminar la cuenta del array de cuentas
+      this.accounts = this.accounts.filter(acc => acc.id !== this.accountToDelete?.id);
+      
+      // Actualizar la lista filtrada
+      this.filterAccounts();
+      
+      // Guardar cuentas en localStorage después de eliminar
+      this.saveAccountsToLocalStorage();
+      
+      // Mostrar notificación de éxito
+      Swal.fire({
+        title: 'Eliminado',
+        text: 'La cuenta ha sido eliminada correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6'
+      });
+      
+      // Cerrar el modal de confirmación
+      this.closeDeleteConfirmation();
+    }
+  }
+  
+  /**
+   * Método para cerrar el modal de confirmación sin eliminar
+   */
+  closeDeleteConfirmation(): void {
+    this.showDeleteConfirmation = false;
+    this.accountToDelete = null;
   }
 }
