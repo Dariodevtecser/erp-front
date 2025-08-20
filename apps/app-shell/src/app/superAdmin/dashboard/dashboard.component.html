@@ -1,0 +1,61 @@
+<div class="usuarios-wrapper">
+  <div class="usuarios-header">
+    <div>
+      <h1>Usuarios</h1>
+      <span class="usuarios-total">Total de usuarios activos: {{ usuarios.length }}</span>
+    </div>
+    <button class="nuevo-usuario-btn" (click)="crearUsuario()">
+      NUEVO USUARIO <span class="plus-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke="#7B61FF" stroke-width="2"/>
+      <line x1="12" y1="9" x2="12" y2="15" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9" y1="12" x2="15" y2="12" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+      </span>
+    </button>
+  </div>
+  <div class="usuarios-table-wrapper">
+    <table class="usuarios-table">
+      <thead>
+        <tr>
+          <th>Cédula <span class="arrow">&#8595;</span></th>
+          <th>Nombre <span class="arrow">&#8595;</span></th>
+          <th>Correo</th>
+          <th>Rol <span class="arrow">&#8595;</span></th>
+          <th>Cargo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios; let i = index" [class.row-selected]="i === 5">
+          <td>{{ usuario.cedula }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td>{{ usuario.cargo }}</td>
+          <td>
+            <button class="icon-btn" title="Editar" (click)="editarUsuario(usuario.cedula)">
+              <!-- Lapiz SVG -->
+              <svg width="20" height="20" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l4 4L6 16H2v-4L12 2z"/></svg>
+            </button>
+            <button class="icon-btn" title="Deshabilitar">
+              <!-- X roja SVG -->
+              <svg width="20" height="20" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><line x1="7" y1="7" x2="13" y2="13"/><line x1="13" y1="7" x2="7" y2="13"/></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="usuarios-pagination">
+      <span>1 - {{ usuarios.length }} de {{ usuarios.length }} páginas</span>
+      <div class="pagination-controls">
+        <label>Página</label>
+        <select>
+          <option>1</option>
+        </select>
+        <button class="next-btn">&gt;</button>
+        <span>de 8</span>
+      </div>
+    </div>
+  </div>
+</div>

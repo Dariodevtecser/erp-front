@@ -19,6 +19,7 @@ export const appRoutes: Route[] = [
       { path: 'header', loadComponent: () => import('@erp-frontend/header').then(m => m.HeaderComponent) },
       { path: 'sidebar', loadComponent: () => import('../../../../libs/src/lib/sidebar/sidebar.component').then(m => m.SidebarComponent) },
       { path: 'footer', loadComponent: () => import('@erp-frontend/footer').then(m => m.FooterComponent) },
+      { path: 'super-admin', loadChildren: () => import('./superAdmin/super-admin.module').then(m => m.SuperAdminModule) },
     ]
   },
   {

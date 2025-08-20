@@ -15,7 +15,8 @@
           <span class="chevron" [ngClass]="{'expanded': isExpanded(item.label)}">&#x25BC;</span>
         </div>
         <div *ngIf="isExpanded(item.label)" class="sidebar-submenu">
-          <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item">
+          <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item"
+          [class.active]="isActive(child.route)">
             {{ child.label }}
           </a>
         </div>
@@ -34,7 +35,8 @@
             <span class="chevron" [ngClass]="{'expanded': isExpanded(item.label)}">&#x25BC;</span>
           </div>
           <div *ngIf="isExpanded(item.label)" class="sidebar-submenu">
-            <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item">
+            <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item"
+            [class.active]="isActive(child.route)">
               {{ child.label }}
             </a>
           </div>

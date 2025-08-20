@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { SelectionService } from '../services/selection.service';
@@ -26,9 +26,26 @@ export class SidebarComponent {
         if(path.endsWith('/home')){
           this.selectedModule = null;
           this.expandedMenu = null;
+        } else {
+          this.setSidebarState(path);
         }
       }
-    })
+    });
+  }
+
+  noOnInit(){
+    this.setSidebarState(this.router.url.split('?')[0]);
+  }
+
+  setSidebarState(path: string){
+    if(path.includes('/budget')){
+      this.selectedModule = 'Presupuesto';
+      this.expandedMenu = 'Macroprocesos';
+    }
+    else if(path.includes('/seguimiento-fuente-financiacion')){
+      this.selectedModule = 'Presupuesto';
+      this.expandedMenu = 'Auditoria';
+    }
   }
 
   isBudgetSection(): boolean {
@@ -97,6 +114,10 @@ export class SidebarComponent {
 
   isExpanded(label: string): boolean {
     return this.expandedMenu === label;
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
   }
 
   redirigirDashboard() {
