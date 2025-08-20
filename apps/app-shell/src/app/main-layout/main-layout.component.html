@@ -1,7 +1,7 @@
-<div class="main-layout-container">
-  <lib-sidebar></lib-sidebar>
+<div class="main-layout-container" [class.sidebar-hidden]="!isSidebarOpen">
+  <lib-sidebar *ngIf="isSidebarOpen"></lib-sidebar>
   <div class="main-content">
-    <lib-header></lib-header>
+    <lib-header (toggleSidebar)="toggleSidebar()"></lib-header>
     <div class="main-scroll-area">
       <main>
         <router-outlet></router-outlet>
