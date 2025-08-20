@@ -22,6 +22,8 @@ export interface BudgetAccount {
   fechaCreacion: string;
   fechaModificacion: string;
   usuarioModificacion: string;
+  showDetails?: boolean; // Propiedad para controlar la visibilidad del acordeón
+  grupoNombre?: string; // Propiedad opcional para el grupo de nombre
 }
 
 const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
@@ -29,7 +31,7 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
     id: '1',
     vigencia: 2025,
     tipoPresupuesto: 'Ingresos',
-    unidadEjecutora: 'Secretaría de Hacienda',
+    unidadEjecutora: '01',
     tipoCuenta: 'ingreso',
     rubro: '1',
     nombre: 'Ingresos',
@@ -49,7 +51,7 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
     id: '2',
     vigencia: 2025,
     tipoPresupuesto: 'Ingresos',
-    unidadEjecutora: 'Secretaría de Hacienda',
+    unidadEjecutora: '01',
     tipoCuenta: 'ingreso',
     rubro: '1.0',
     nombre: 'Disponibilidad Inicial',
@@ -78,23 +80,22 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
 export class BudgetAccountsComponent {
   // Formulario para crear/editar cuentas
   accountForm!: FormGroup;
-  accounts: BudgetAccount[] = BUDGET_ACCOUNTS_MOCK;
-  filteredAccounts: BudgetAccount[] = [...BUDGET_ACCOUNTS_MOCK];
+  accounts = BUDGET_ACCOUNTS_MOCK;
+  filteredAccounts = [...this.accounts];
   search = '';
   vigencia = 2025;
   tipoPresupuesto = '';
   unidadEjecutora = '';
   tipoCuenta = '';
-
-  // Modal properties
-  isModalOpen: boolean = false;
-  currentStep: any = 1;
+  
+  isModalOpen = false;
   isEditMode = false;
   currentAccount: BudgetAccount | null = null;
-
-  // Variables para los controles de UI
+  currentStep = 1;
   showPagination = true;
   showColumnSelector = false;
+  showDeleteConfirmation = false;
+  accountToDelete: BudgetAccount | null = null;
   showExportOptions = false;
   showOptions = false;
   
@@ -324,7 +325,7 @@ export class BudgetAccountsComponent {
     this.search = '';
     this.filterAccounts();
   }
-  
+
   clearAllFilters(): void {
     this.search = '';
     this.vigencia = 2025;
@@ -335,10 +336,10 @@ export class BudgetAccountsComponent {
   }
   
   filterAccounts(): void {
-    // Comenzamos con todas las cuentas
+    // Primero filtramos por término de búsqueda
     let filtered = [...this.accounts];
     
-    // Aplicamos filtro de búsqueda por texto
+    // Filtro por término de búsqueda
     if (this.search && this.search.trim() !== '') {
       const searchTerm = this.search.toLowerCase().trim();
       filtered = filtered.filter(account => 
@@ -350,22 +351,21 @@ export class BudgetAccountsComponent {
       );
     }
     
-    // Aplicamos filtro de tipo de presupuesto
+    // Filtro por tipo de presupuesto
     if (this.tipoPresupuesto) {
       filtered = filtered.filter(account => account.tipoPresupuesto === this.tipoPresupuesto);
     }
     
-    // Aplicamos filtro de unidad ejecutora
+    // Filtro por unidad ejecutora
     if (this.unidadEjecutora) {
       filtered = filtered.filter(account => account.unidadEjecutora === this.unidadEjecutora);
     }
     
-    // Aplicamos filtro de tipo de cuenta
+    // Filtro por tipo de cuenta (ingreso/gasto)
     if (this.tipoCuenta) {
       filtered = filtered.filter(account => account.tipoCuenta === this.tipoCuenta);
     }
     
-    // Actualizamos la lista filtrada
     this.filteredAccounts = filtered;
   }
 
@@ -559,5 +559,46 @@ export class BudgetAccountsComponent {
 
   exitWizard(): void {
     this.closeModal();
+  }
+  
+  /**
+   * Método para controlar la apertura/cierre del acordeón
+   * @param account La cuenta presupuestal a mostrar/ocultar detalles
+   */
+  toggleAccordion(account: BudgetAccount): void {
+    account.showDetails = !account.showDetails;
+  }
+  
+  /**
+   * Método para mostrar el modal de confirmación de eliminación
+   * @param account La cuenta presupuestal a eliminar
+   */
+  onDeleteAccount(account: BudgetAccount): void {
+    this.accountToDelete = account;
+    this.showDeleteConfirmation = true;
+  }
+  
+  /**
+   * Método para confirmar la eliminación de una cuenta
+   */
+  confirmDelete(): void {
+    if (this.accountToDelete) {
+      // Eliminar la cuenta del array de cuentas
+      this.accounts = this.accounts.filter(acc => acc.id !== this.accountToDelete?.id);
+      
+      // Actualizar la lista filtrada
+      this.filterAccounts();
+      
+      // Cerrar el modal de confirmación
+      this.closeDeleteConfirmation();
+    }
+  }
+  
+  /**
+   * Método para cerrar el modal de confirmación sin eliminar
+   */
+  closeDeleteConfirmation(): void {
+    this.showDeleteConfirmation = false;
+    this.accountToDelete = null;
   }
 }
