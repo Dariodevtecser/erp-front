@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalComponent } from '../../../../../../libs/src/lib/models/modal.component';
+import { ModalComponent } from '../../../../../../libs/src/lib/modals/modal.component';
 
 @Component({
   selector: 'app-dashboard',
