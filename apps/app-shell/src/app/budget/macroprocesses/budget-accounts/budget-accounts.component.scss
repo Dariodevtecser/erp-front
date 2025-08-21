@@ -887,7 +887,7 @@
   font-size: 0.98rem;
   
   .options-header {
-    text-align: right;
+    text-align: center;
     padding-right: 20px;
   }
   
@@ -901,7 +901,7 @@
   
   .options-cell {
     min-width: 180px;
-    text-align: right;
+    text-align: center;
     padding-right: 20px;
   }
   
@@ -980,7 +980,7 @@
 }
 .budget-table th, .budget-table td {
   padding: 11px 12px;
-  text-align: left;
+  text-align: center;
 }
 .budget-table th {
   background: #f1f3fa;
@@ -991,6 +991,7 @@
   top: 0;
   z-index: 1;
   cursor: pointer;
+  text-align: center;
 }
 .budget-table tr {
   transition: background 0.2s;

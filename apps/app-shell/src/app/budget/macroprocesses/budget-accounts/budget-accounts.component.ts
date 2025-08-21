@@ -74,15 +74,15 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
 @Component({
   selector: 'app-budget-accounts',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './budget-accounts.component.html',
   styleUrls: ['./budget-accounts.component.scss']
 })
 export class BudgetAccountsComponent {
   // Formulario para crear/editar cuentas
   accountForm!: FormGroup;
-  accounts = BUDGET_ACCOUNTS_MOCK;
-  filteredAccounts = [...this.accounts];
+  accounts: BudgetAccount[] = [];
+  filteredAccounts: BudgetAccount[] = [];
   search = '';
   vigencia = 2025;
   tipoPresupuesto = '';
@@ -228,6 +228,15 @@ export class BudgetAccountsComponent {
   constructor(private fb: FormBuilder) {
     // Cargar cuentas desde localStorage si existen
     this.loadAccountsFromLocalStorage();
+    
+    // Si no hay cuentas en localStorage, usar los datos mock
+    if (this.accounts.length === 0) {
+      this.accounts = [...BUDGET_ACCOUNTS_MOCK];
+      this.saveAccountsToLocalStorage();
+    }
+    
+    // Inicializar la lista filtrada
+    this.filteredAccounts = [...this.accounts];
     
     this.accountForm = this.fb.group({
       // Paso 1: Datos Generales
@@ -705,8 +714,17 @@ export class BudgetAccountsComponent {
     try {
       localStorage.setItem('budgetAccounts', JSON.stringify(this.accounts));
       console.log('Cuentas guardadas en localStorage:', this.accounts.length);
+      // Actualizar también la lista filtrada
+      this.filterAccounts();
     } catch (error) {
       console.error('Error al guardar cuentas en localStorage:', error);
+      // Mostrar notificación de error al usuario
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudieron guardar los datos. Por favor, inténtelo de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
   
@@ -719,7 +737,19 @@ export class BudgetAccountsComponent {
         console.log('Cuentas cargadas desde localStorage:', this.accounts.length);
       } catch (error) {
         console.error('Error al cargar cuentas desde localStorage:', error);
+        // Si hay un error al cargar, inicializar con array vacío
+        this.accounts = [];
+        // Mostrar notificación de error al usuario
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudieron cargar los datos guardados. Se inicializará con datos predeterminados.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
+    } else {
+      // Si no hay datos guardados, inicializar con array vacío
+      this.accounts = [];
     }
   }
 
