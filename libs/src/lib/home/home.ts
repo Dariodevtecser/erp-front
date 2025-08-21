@@ -9,7 +9,7 @@ import { SidebarService } from '../services/sidebar.service';
 @Component({
   selector: 'lib-home',
   standalone: true,
-  imports: [CommonModule, CardComponent],
+  imports: [CommonModule, CardComponent, FooterComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -53,11 +53,11 @@ export class HomeComponent {
     const noFavoritos = this.originalModulos.filter(m => !this.favoritos.includes(m.title));
     this.modulos = [...favoritos, ...noFavoritos];
   }
-  
+
   isFavorite(modulo: any): boolean {
     return this.favoritos.includes(modulo.title);
   }
-  
+
   isSelected(modulo: any): boolean {
     return this.selectedCard === modulo.title;
   }

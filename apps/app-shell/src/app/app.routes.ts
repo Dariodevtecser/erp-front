@@ -26,8 +26,15 @@ export const appRoutes: Route[] = [
       { path: 'super-admin', loadComponent: () => import('./superAdmin/super-admin.component').then(m => m.SuperAdminComponent),
         children: [
           { path: '',loadComponent: () => import('./superAdmin/dashboard/dashboard.component').then(m => m.DashboardComponent) },
-          { path: 'create', loadComponent: () => import('./superAdmin/create-user/create-user.component').then(m => m.CreateUserComponent) },
+          { path: 'createSuperAdmin', loadComponent: () => import('./superAdmin/create-user/create-user.component').then(m => m.CreateUserComponent) },
           { path: 'edit/:id', loadComponent: () => import('./superAdmin/edit-user/edit-user.component').then(m => m.EditUserComponent) }
+        ]
+      },
+      { 
+        path: 'admin', loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
+        children: [
+          { path: '', loadComponent: () => import('./admin/dashboard/dashboard.component').then(m => m.DashboardComponent) },
+          { path: 'createAdmin', loadComponent: () => import('./admin/create-user/create-user.component').then(m => m.CreateUserComponent) }
         ]
       },
     ]
