@@ -5,10 +5,11 @@ import { HeaderComponent } from '@erp-frontend/header';
 import { SidebarComponent } from '../../../../../libs/src/lib/sidebar/sidebar.component';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { SidebarService } from '../../../../../libs/src/lib/services/sidebar.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [CommonModule, FooterComponent, HeaderComponent, SidebarComponent, RouterModule],
+  imports: [CommonModule, FooterComponent, HeaderComponent, SidebarComponent, RouterModule, HttpClientModule],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss']
 })

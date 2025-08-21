@@ -15,9 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@erp-frontend/footer": ["libs/src/lib/footer/footer.component.ts"],
       "@erp-frontend/header": ["libs/src/lib/header/header.component.ts"],
       "@erp-frontend/home": ["libs/src/index.ts"],
-      "@erp-frontend/footer": ["libs/src/lib/footer/footer.component.ts"],
       "@erp-frontend/sidebar": ["libs/src/lib/sidebar/sidebar.component.ts"]
     }
   },
