@@ -141,23 +141,13 @@
           <td class="options-cell">
             <div class="action-buttons-container">
               <button class="icon-btn add" title="Agregar" (click)="onAddAccount()">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="9" y="4" width="2" height="12" rx="1" fill="#fff"/>
-                  <rect x="4" y="9" width="12" height="2" rx="1" fill="#fff"/>
-                </svg>
+                <img src="assets/Vector (2).svg" alt="Agregar" class="icon-svg" width="20" height="20">
               </button>
               <button class="icon-btn edit" title="Editar" (click)="onEditAccount(acc)">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M5 15V13.5858C5 13.2107 5.15804 12.851 5.43934 12.5858L13.2929 4.73223C13.6834 4.34171 14.3166 4.34171 14.7071 4.73223L15.2678 5.29289C15.6583 5.68342 15.6583 6.31658 15.2678 6.70711L7.41421 14.5607C7.149 14.842 6.78929 15 6.41421 15H5Z" fill="#fff"/>
-                  <rect x="4" y="15" width="12" height="2" rx="1" fill="#fff"/>
-                </svg>
+                <img src="assets/Vector (3).svg" alt="Editar" class="icon-svg" width="20" height="20">
               </button>
               <button class="icon-btn delete" title="Eliminar" (click)="onDeleteAccount(acc)">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M8 4H12M4 6H16M15 6L14.2987 14.5193C14.1935 16.0975 12.8821 17.3 11.3 17.3H8.7C7.11792 17.3 5.80653 16.0975 5.70133 14.5193L5 6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="11.6" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
-                  <rect x="7" y="5" width="6" height="2" rx="1" fill="#fff"/>
-                </svg>
+                <img src="assets/Vector (4).svg" alt="Eliminar" class="icon-svg" width="20" height="20">
               </button>
             </div>
             
@@ -241,7 +231,7 @@
           <svg *ngIf="currentStep > 1" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span *ngIf="currentStep === 1">✏️</span>
+          <span *ngIf="currentStep === 1">1</span>
           <span *ngIf="currentStep !== 1 && currentStep <= 1">1</span>
         </div>
         <span class="step-label">Datos Generales</span>
@@ -252,7 +242,7 @@
           <svg *ngIf="currentStep > 2" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span *ngIf="currentStep === 2">✏️</span>
+          <span *ngIf="currentStep === 2">2</span>
           <span *ngIf="currentStep !== 2 && currentStep <= 2">2</span>
         </div>
         <span class="step-label">Enlaces Sifse y SIA</span>
@@ -263,7 +253,7 @@
           <svg *ngIf="currentStep > 3" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span *ngIf="currentStep === 3">✏️</span>
+          <span *ngIf="currentStep === 3">3</span>
           <span *ngIf="currentStep !== 3 && currentStep <= 3">3</span>
         </div>
         <span class="step-label">Enlaces CGR y FUT</span>
@@ -274,7 +264,7 @@
           <svg *ngIf="currentStep > 4" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span *ngIf="currentStep === 4">✏️</span>
+          <span *ngIf="currentStep === 4">4</span>
           <span *ngIf="currentStep !== 4 && currentStep <= 4">4</span>
         </div>
         <span class="step-label">Enlaces CCPET</span>
