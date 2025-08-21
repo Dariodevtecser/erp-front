@@ -1,6 +1,6 @@
 .home-layout {
   display: flex;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .home-container {
@@ -22,9 +22,9 @@ lib-sidebar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 32px;
-  height: 100vh;
+  /* height: 100vh; */
   align-content: flex-start;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 32px;

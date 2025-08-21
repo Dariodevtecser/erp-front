@@ -1,0 +1,146 @@
+.permisos-wrapper {
+  padding: 32px 0;
+  background: #fff;
+}
+
+.permisos-header h2 {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.permisos-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 24px;
+}
+
+.permisos-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.permisos-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.permisos-card-total {
+  color: #444;
+  margin-left: 18px;
+}
+
+.permisos-card-actions button {
+  background: #fff;
+  border: 2px solid #a78bfa;
+  color: #7B61FF;
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-size: 1em;
+  font-weight: 500;
+  margin-left: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: none;
+  &:hover {
+    background: #ede9fe;
+    color: #7B61FF;
+    border-color: #7B61FF;
+  }
+}
+
+.permisos-table-wrapper {
+  margin-top: 12px;
+}
+
+.permisos-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.permisos-table th, .permisos-table td {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.permisos-table th {
+  color: #7B61FF;
+  font-weight: 600;
+  font-size: 1em;
+  background: #fff;
+}
+
+.modulo-row .modulo-title,
+.submodulo-row .submodulo-title {
+  font-weight: bold;
+  color: #444;
+  background: #fff;
+}
+
+.item-dot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #ede9fe;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  position: relative;
+}
+.item-dot::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #7B61FF;
+  border-radius: 50%;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+input[type="checkbox"] {
+  accent-color: #7B61FF;
+  width: 18px;
+  height: 18px;
+  margin: 0 auto;
+  display: block;
+}
+
+.permisos-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  font-size: 0.95em;
+  color: #444;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.next-btn {
+  background: #fff;
+  border: 2px solid #a78bfa;
+  color: #7B61FF;
+  border-radius: 8px;
+  padding: 2px 12px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: none;
+  &:hover {
+    background: #ede9fe;
+    color: #7B61FF;
+    border-color: #7B61FF;
+  }
+}

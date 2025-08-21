@@ -1,4 +1,4 @@
-<aside class="sidebar-gin360">
+<aside class="sidebar-gin360" *ngIf="isSidebarOpen">
   <!-- Header: Logo y título -->
   <div class="sidebar-header">
     <img src="assets/gin360-logo.png" alt="Gin 360 Logo" class="sidebar-logo" />
@@ -15,7 +15,8 @@
           <span class="chevron" [ngClass]="{'expanded': isExpanded(item.label)}">&#x25BC;</span>
         </div>
         <div *ngIf="isExpanded(item.label)" class="sidebar-submenu">
-          <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item">
+          <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item"
+          [class.active]="isActive(child.route)">
             {{ child.label }}
           </a>
         </div>
@@ -34,7 +35,8 @@
             <span class="chevron" [ngClass]="{'expanded': isExpanded(item.label)}">&#x25BC;</span>
           </div>
           <div *ngIf="isExpanded(item.label)" class="sidebar-submenu">
-            <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item">
+            <a *ngFor="let child of item.children" [routerLink]="child.route" class="sidebar-submenu-item"
+            [class.active]="isActive(child.route)">
               {{ child.label }}
             </a>
           </div>
