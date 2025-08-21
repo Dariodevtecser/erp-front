@@ -478,15 +478,15 @@
 }
 
 .step.active .step-circle {
-  background: #4361ee;
-  border-color: #4361ee;
+  background: #6768c7;
+  border-color: #6768c7;
   color: white;
-  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+  box-shadow: 0 0 0 3px rgba(103, 104, 199, 0.2);
 }
 
 .step.completed .step-circle {
-  background: #4bb543;
-  border-color: #4bb543;
+  background: #5859a8;
+  border-color: #5859a8;
   color: white;
   
   svg {
@@ -509,7 +509,7 @@
 }
 
 .step.active .step-label {
-  color: #4361ee;
+  color: #6768c7;
   font-weight: 600;
 }
 
@@ -533,7 +533,7 @@
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: #4361ee;
+    background-color: #6768c7;
     border-radius: 3px;
   }
 }
@@ -594,8 +594,8 @@
     
     &:focus {
       outline: none;
-      border-color: #4361ee;
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+      border-color: #6768c7;
+      box-shadow: 0 0 0 3px rgba(103, 104, 199, 0.15);
     }
     
     &:hover {
@@ -740,13 +740,13 @@
     }
     
     &.btn-primary {
-      background: #4361ee;
-      border: 1px solid #4361ee;
+      background: #6768c7;
+      border: 1px solid #6768c7;
       color: white;
       
       &:hover {
-        background: #3a56d4;
-        border-color: #3a56d4;
+        background: #5859a8;
+        border-color: #5859a8;
       }
     }
     
@@ -1024,10 +1024,10 @@ body, .budget-layout, .budget-main, .budget-table, .budget-filters, .budget-head
   transition: filter 0.15s, box-shadow 0.15s;
 }
 .icon-btn.add {
-  background: #6C63FF;
+  background: #6768c7;
 }
 .icon-btn.edit {
-  background: #363C44;
+  background: #6768c7;
 }
 .icon-btn.delete {
   background: #F55E5E;
