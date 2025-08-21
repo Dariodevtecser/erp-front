@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { MainLayoutComponent } from '../app/main-layout/main-layout.component';
-import { LoginComponent } from './login/login/login.component';
+import { LoginComponent } from './login/login.component';
 
 
 export const appRoutes: Route[] = [
@@ -15,11 +15,21 @@ export const appRoutes: Route[] = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', loadComponent: () => import('@erp-frontend/home').then(m => m.HomeComponent) },
-      { path: 'budget', loadChildren: () => import('./budget/budget.module').then(m => m.BudgetModule) },
+      { path: 'budget', loadComponent: () => import('./budget/budget.component').then(m => m.BudgetComponent),
+        children: [
+          { path: 'macroprocesses/budget-accounts', loadComponent: () => import('../app/budget/macroprocesses/budget-accounts/budget-accounts.component').then(m => m.BudgetAccountsComponent) }
+        ]
+       },
       { path: 'header', loadComponent: () => import('@erp-frontend/header').then(m => m.HeaderComponent) },
       { path: 'sidebar', loadComponent: () => import('../../../../libs/src/lib/sidebar/sidebar.component').then(m => m.SidebarComponent) },
       { path: 'footer', loadComponent: () => import('@erp-frontend/footer').then(m => m.FooterComponent) },
-      { path: 'super-admin', loadChildren: () => import('./superAdmin/super-admin.module').then(m => m.SuperAdminModule) },
+      { path: 'super-admin', loadComponent: () => import('./superAdmin/super-admin.component').then(m => m.SuperAdminComponent),
+        children: [
+          { path: '',loadComponent: () => import('./superAdmin/dashboard/dashboard.component').then(m => m.DashboardComponent) },
+          { path: 'create', loadComponent: () => import('./superAdmin/create-user/create-user.component').then(m => m.CreateUserComponent) },
+          { path: 'edit/:id', loadComponent: () => import('./superAdmin/edit-user/edit-user.component').then(m => m.EditUserComponent) }
+        ]
+      },
     ]
   },
   {

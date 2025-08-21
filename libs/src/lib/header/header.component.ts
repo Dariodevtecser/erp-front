@@ -21,7 +21,10 @@ export class HeaderComponent {
     'home': 'Home',
     'budget': 'Presupuesto',
     'macroprocesses': 'Macroprocesos',
-    'budget-accounts': 'Cuentas de Presupuesto'
+    'budget-accounts': 'Cuentas de Presupuesto',
+    'super-admin': 'Super Administrador',
+    'edit': 'Usuario a editar',
+    'create': 'Crear Usuario',
     // Agrega más según tus rutas
   };
 

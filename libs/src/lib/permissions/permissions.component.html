@@ -1,0 +1,54 @@
+<div class="permisos-wrapper">
+  <div class="permisos-header">
+    <h2>Permisos de usuario</h2>
+  </div>
+  <div class="permisos-card">
+    <div class="permisos-card-header">
+      <div>
+        <span class="permisos-card-title">Usuarios</span>
+        <span class="permisos-card-total">Total de usuarios activos: 18</span>
+      </div>
+      <div class="permisos-card-actions">
+        <button class="permisos-filtros-btn">
+          Filtros
+          <span class="icon-filtro">&#x1F50D;</span>
+        </button>
+        <button class="permisos-nuevo-btn">
+          Nuevos usuarios
+          <span class="icon-nuevo">+</span>
+        </button>
+      </div>
+    </div>
+    <div class="permisos-table-wrapper">
+      <table class="permisos-table">
+        <thead>
+          <tr>
+            <th>Módulo</th>
+            <th>Ver <span class="arrow">&#8595;</span></th>
+            <th>Editar <span class="arrow">&#8595;</span></th>
+            <th>Imprimir <span class="arrow">&#8595;</span></th>
+            <th>Todos <span class="arrow">&#8595;</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="modulo-row">
+            <td class="modulo-title">Presupuesto <span class="arrow">&#8594;</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr class="submodulo-row">
+            <td class="submodulo-title">Procesos Generales <span class="arrow">&#8594;</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr *ngFor="let item of permisos">
+            <td>
+              <span class="item-dot"></span>
+              {{ item.nombre }}
+            </td>
+            <td><input type="checkbox" [(ngModel)]="item.ver" /></td>
+            <td><input type="checkbox" [(ngModel)]="item.editar" /></td>
+            <td><input type="checkbox" [(ngModel)]="item.imprimir" /></td>
+            <td><input type="checkbox" [(ngModel)]="item.todos" /></td>
+          </tr>
+        </tbody>
+      </table>
+     

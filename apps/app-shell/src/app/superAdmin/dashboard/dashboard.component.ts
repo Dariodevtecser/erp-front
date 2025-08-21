@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from '../../../../../../libs/src/lib/models/modal.component';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',

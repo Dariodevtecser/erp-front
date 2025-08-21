@@ -25,8 +25,23 @@ export class LoginComponent {
         text: 'Bienvenido al ERP',
         showCloseButton: true
       });
+    } else if(this.username === 'admin' &&  this.password === '12345'){
+      this.router.navigate(['/app/admin']);
+      Swal.fire({
+        icon: 'success',
+        title: 'Datos correctos',
+        text: 'Bienvenido Administrador',
+        showCloseButton: true
+      });
+    } else if(this.username === 'user1' && this.password === '12345'){
+      this.router.navigate(['/app/home']);
+      Swal.fire({
+        icon: 'success',
+        title: 'Datos correctos',
+        text: 'Bienvenido Usuario 1',
+        showCloseButton: true
+      });
     } else {
-      // alert('Usuario o contraseña incorrectos');
       Swal.fire({
         icon: 'error',
         title: 'Datos incorrectos',
