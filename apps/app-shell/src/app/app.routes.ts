@@ -17,7 +17,7 @@ export const appRoutes: Route[] = [
       { path: 'home', loadComponent: () => import('@erp-frontend/home').then(m => m.HomeComponent) },
       { path: 'budget', loadComponent: () => import('./budget/budget.component').then(m => m.BudgetComponent),
         children: [
-          // { path: 'macroprocesses/budget-accounts', loadComponent: () => import('../app/budget/macroprocesses/budget-accounts/budget-accounts.component').then(m => m.BudgetAccountsComponent) }
+          { path: 'macroprocesses/budget-accounts', loadComponent: () => import('../app/budget/macroprocesses/budget-accounts/budget-accounts.component').then(m => m.BudgetAccountsComponent) }
         ]
        },
       { path: 'header', loadComponent: () => import('@erp-frontend/header').then(m => m.HeaderComponent) },
