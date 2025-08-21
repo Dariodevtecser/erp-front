@@ -20,8 +20,21 @@ export const appRoutes: Route[] = [
       { path: 'sidebar', loadComponent: () => import('../../../../libs/src/lib/sidebar/sidebar.component').then(m => m.SidebarComponent) },
       { path: 'footer', loadComponent: () => import('@erp-frontend/footer').then(m => m.FooterComponent) },
 
-      { path: 'admin', loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent) },
-        
+      { 
+        path: 'admin', 
+        loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./admin/dashboard/dashboard.component').then(m => m.DashboardComponent)
+          },
+          {
+            path: 'create',
+            loadComponent: () => import('./admin/create-user/create-user.component').then(m => m.CreateUserComponent)
+          }
+        ]
+      },
+
 
       { path: 'super-admin', loadChildren: () => import('./superAdmin/super-admin.module').then(m => m.SuperAdminModule) },
     ]

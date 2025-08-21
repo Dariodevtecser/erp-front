@@ -21,7 +21,9 @@ export class HeaderComponent {
     'home': 'Home',
     'budget': 'Presupuesto',
     'macroprocesses': 'Macroprocesos',
-    'budget-accounts': 'Cuentas de Presupuesto'
+    'budget-accounts': 'Cuentas de Presupuesto',
+    'admin': 'Administrador',
+    'create': 'Crear Usuario'
     // Agrega más según tus rutas
   };
 
@@ -43,12 +45,12 @@ export class HeaderComponent {
       });
       this.buildBreadcrumbs();
     }
-    
+
     buildBreadcrumbs(){
       const path = this.router.url.split('?')[0];
       const segments = path.split('/').filter(seg => seg && seg !== 'app');
       let crumbs: string[] = [];
-      
+
       // Si estás en home y tienes un módulo/card seleccionado, muestra Home > [nombre card]
         if (segments.length === 1 && segments[0] === 'home' && this.selectedModule) {
           crumbs = ['Home', this.selectedModule];

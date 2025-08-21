@@ -9,7 +9,7 @@ import { SuperAdminRoutingModule } from './super-admin-routing.module';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule, 
+    CommonModule,
     SuperAdminComponent,
     DashboardComponent,
     EditUserComponent,
