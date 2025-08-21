@@ -34,7 +34,8 @@ export const appRoutes: Route[] = [
         path: 'admin', loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
         children: [
           { path: '', loadComponent: () => import('./admin/dashboard/dashboard.component').then(m => m.DashboardComponent) },
-          { path: 'createAdmin', loadComponent: () => import('./admin/create-user/create-user.component').then(m => m.CreateUserComponent) }
+          { path: 'createAdmin', loadComponent: () => import('./admin/create-user/create-user.component').then(m => m.CreateUserComponent) },
+          { path: 'permissions', loadComponent: () => import('../../../../libs/src/lib/permissions/permissions.component').then(m => m.PermissionsComponent) }
         ]
       },
     ]

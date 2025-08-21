@@ -28,7 +28,7 @@ export class DashboardComponent {
 ];constructor(private router: Router, private route: ActivatedRoute) {}
 
   crearUsuario() {
-    this.router.navigate(['create'], { relativeTo: this.route });
+    this.router.navigate(['createAdmin'], { relativeTo: this.route });
   }
 
   editarUsuario(id: string) {

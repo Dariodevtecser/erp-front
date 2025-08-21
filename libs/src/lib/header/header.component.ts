@@ -49,23 +49,41 @@ export class HeaderComponent {
       this.buildBreadcrumbs();
     }
 
-    buildBreadcrumbs(){
-      const path = this.router.url.split('?')[0];
-      const segments = path.split('/').filter(seg => seg && seg !== 'app');
-      let crumbs: string[] = [];
+    buildBreadcrumbs() {
+  const path = this.router.url.split('?')[0];
+  const segments = path.split('/').filter(seg => seg && seg !== 'app');
+  let crumbs: string[] = [];
 
-      // Si estás en home y tienes un módulo/card seleccionado, muestra Home > [nombre card]
-        if (segments.length === 1 && segments[0] === 'home' && this.selectedModule) {
-          crumbs = ['Home', this.selectedModule];
-        } else {
-          crumbs = segments.map(seg => this.nameMap[seg] || seg);
-          // Si la ruta no empieza con 'home', puedes anteponer 'Home' si quieres
-            if (crumbs[0] !== 'Home') {
-              crumbs = ['Home', ...crumbs];
-            }
-          }
-          this.breadcrumbs = crumbs;
-        }
+  // Caso especial para admin/createAdmin y admin/permissions
+  if (
+    segments[0] === 'admin' &&
+    (segments[1] === 'createAdmin' || segments[1] === 'permissions')
+  ) {
+    crumbs = ['Administrador', 'Crear Usuario'];
+    if (segments[1] === 'permissions') {
+      crumbs.push('Permisos');
+    }
+  }
+  // Caso especial para super-admin/createSuperAdmin y super-admin/permissions
+  else if (
+    segments[0] === 'super-admin' &&
+    (segments[1] === 'createSuperAdmin' || segments[1] === 'permissions')
+  ) {
+    crumbs = ['Super Administrador', 'Crear Usuario'];
+    if (segments[1] === 'permissions') {
+      crumbs.push('Permisos');
+    }
+  }
+  else if (segments.length === 1 && segments[0] === 'home' && this.selectedModule) {
+    crumbs = ['Home', this.selectedModule];
+  } else {
+    crumbs = segments.map(seg => this.nameMap[seg] || seg);
+    if (crumbs[0] !== 'Home') {
+      crumbs = ['Home', ...crumbs];
+    }
+  }
+  this.breadcrumbs = crumbs;
+}
 
     goHome(){
       this.router.navigate(['/app/home']);

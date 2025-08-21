@@ -1,617 +1,618 @@
-<div class="budget-layout">
-  <lib-sidebar class="budget-sidebar"></lib-sidebar>
-  <main class="budget-main">
-    <div class="budget-header">
-      <div class="header-content">
-        <div class="header-actions">
-        </div>
-      </div>
-    </div>
-    <div class="budget-filters">
-      <div class="filters-container">
-        <div class="filter-group">
-          <label>Vigencia</label>
-          <select [(ngModel)]="vigencia">
-            <option [value]="2025">2025</option>
-            <option [value]="2024">2024</option>
-          </select>
-        </div>
-        
-        <div class="filter-group">
-          <label>Tipo Presupuesto</label>
-          <select [(ngModel)]="tipoPresupuesto" class="select-with-arrow">
-            <option value="">Seleccionar</option>
-            <option value="Ingresos">Ingresos</option>
-            <option value="Funcionamiento">Funcionamiento</option>
-            <option value="Inversión">Inversión</option>
-            <option value="Deuda">Deuda</option>
-            <option value="SGR">SGR</option>
-          </select>
-        </div>
-        
-        <div class="filter-group">
-          <label>Unidad Ejecutora</label>
-          <select [(ngModel)]="unidadEjecutora" class="select-with-arrow">
-            <option value="">Seleccionar</option>
-            <option value="01">01 - Unidad Central</option>
-            <option value="02">02 - Secretaría de Educación</option>
-            <option value="03">03 - Secretaría de Salud</option>
-            <option value="04">04 - Secretaría de Infraestructura</option>
-          </select>
-        </div>
-        
-        <div class="filter-group">
-          <label>Tipo de Cuenta</label>
-          <select [(ngModel)]="tipoCuenta" class="select-with-arrow">
-            <option value="">Seleccionar</option>
-            <option value="ingreso">Ingreso</option>
-            <option value="gasto">Gasto</option>
-          </select>
-        </div>
-        
-        <div class="filter-group search-filter">
-          <label>Buscar</label>
-          <div class="search-input-wrapper">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M21 21L16.65 16.65" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <input [(ngModel)]="search" placeholder="Buscar cuenta" (input)="filterAccounts()" />
-            <button class="icon-btn clear-inside" title="Limpiar todos los filtros" (click)="clearAllFilters()">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M12 4l-8 8m0-8l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+<div class="accounts-container">
+  <div class="budget-layout">
+    <main class="budget-main">
+      <div class="budget-header">
+        <div class="header-content">
+          <div class="header-actions">
           </div>
         </div>
       </div>
-      
-      <div class="action-buttons">
-        
-        <div class="dropdown">
-          <button class="icon-btn columns" title="Seleccionar Columnas" (click)="toggleColumnSelector()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="14" y="3" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="3" y="14" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="14" y="14" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="dropdown-content column-selector" *ngIf="showColumnSelector">
-            <div class="column-header">
-              <h4>Columnas visibles</h4>
+      <div class="budget-filters">
+        <div class="filters-container">
+          <div class="filter-group">
+            <label>Vigencia</label>
+            <select [(ngModel)]="vigencia">
+              <option [value]="2025">2025</option>
+              <option [value]="2024">2024</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Tipo Presupuesto</label>
+            <select [(ngModel)]="tipoPresupuesto" class="select-with-arrow">
+              <option value="">Seleccionar</option>
+              <option value="Ingresos">Ingresos</option>
+              <option value="Funcionamiento">Funcionamiento</option>
+              <option value="Inversión">Inversión</option>
+              <option value="Deuda">Deuda</option>
+              <option value="SGR">SGR</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Unidad Ejecutora</label>
+            <select [(ngModel)]="unidadEjecutora" class="select-with-arrow">
+              <option value="">Seleccionar</option>
+              <option value="01">01 - Unidad Central</option>
+              <option value="02">02 - Secretaría de Educación</option>
+              <option value="03">03 - Secretaría de Salud</option>
+              <option value="04">04 - Secretaría de Infraestructura</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Tipo de Cuenta</label>
+            <select [(ngModel)]="tipoCuenta" class="select-with-arrow">
+              <option value="">Seleccionar</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
+          
+          <div class="filter-group search-filter">
+            <label>Buscar</label>
+            <div class="search-input-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 21L16.65 16.65" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input [(ngModel)]="search" placeholder="Buscar cuenta" (input)="filterAccounts()" />
+              <button class="icon-btn clear-inside" title="Limpiar todos los filtros" (click)="clearAllFilters()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M12 4l-8 8m0-8l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
-            <div class="column-scroll">
-              <div class="column-item" *ngFor="let column of availableColumns">
-                <label>
-                  <input type="checkbox" [(ngModel)]="column.visible" />
-                  <span class="checkbox-custom"></span>
-                  {{ column.name }}
-                </label>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          
+          <div class="dropdown">
+            <button class="icon-btn columns" title="Seleccionar Columnas" (click)="toggleColumnSelector()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="14" y="3" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="3" y="14" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="14" y="14" width="7" height="7" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="dropdown-content column-selector" *ngIf="showColumnSelector">
+              <div class="column-header">
+                <h4>Columnas visibles</h4>
+              </div>
+              <div class="column-scroll">
+                <div class="column-item" *ngFor="let column of availableColumns">
+                  <label>
+                    <input type="checkbox" [(ngModel)]="column.visible" />
+                    <span class="checkbox-custom"></span>
+                    {{ column.name }}
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div class="dropdown">
-          <button class="icon-btn export" title="Exportar Datos" (click)="toggleExportOptions()">
+          
+          <div class="dropdown">
+            <button class="icon-btn export" title="Exportar Datos" (click)="toggleExportOptions()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="dropdown-content" *ngIf="showExportOptions">
+              <button (click)="exportData('excel')">MS-Excel</button>
+              <button (click)="exportData('csv')">CSV</button>
+              <button (click)="exportData('txt')">TXT</button>
+            </div>
+          </div>
+          
+          <button class="icon-btn print" title="Imprimir" (click)="printData()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 9V2h12v7M6 18H4v-9h16v9h-2M6 14h12v8H6v-8z" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <div class="dropdown-content" *ngIf="showExportOptions">
-            <button (click)="exportData('excel')">MS-Excel</button>
-            <button (click)="exportData('csv')">CSV</button>
-            <button (click)="exportData('txt')">TXT</button>
-          </div>
+          
+  
         </div>
-        
-        <button class="icon-btn print" title="Imprimir" (click)="printData()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M6 9V2h12v7M6 18H4v-9h16v9h-2M6 14h12v8H6v-8z" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </div>
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th class="details-header">Detalles</th>
+            <th>Rubro</th>
+            <th>Nombre</th>
+            <th class="options-header">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let acc of filteredAccounts" class="account-row">
+            <td class="details-cell">
+              <button class="accordion-toggle" (click)="toggleAccordion(acc)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6L8 10L12 6" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Más detalles</span>
+              </button>
+            </td>
+            <td class="rubro-cell">
+              <span class="rubro-text">{{ acc.rubro }}</span>
+            </td>
+            <td>{{ acc.nombre }}</td>
+            <td class="options-cell">
+              <div class="action-buttons-container">
+                <button class="icon-btn add" title="Agregar" (click)="onAddAccount()">
+                  <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="9" y="4" width="2" height="12" rx="1" fill="#fff"/>
+                    <rect x="4" y="9" width="12" height="2" rx="1" fill="#fff"/>
+                  </svg>
+                </button>
+                <button class="icon-btn edit" title="Editar" (click)="onEditAccount(acc)">
+                  <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 15V13.5858C5 13.2107 5.15804 12.851 5.43934 12.5858L13.2929 4.73223C13.6834 4.34171 14.3166 4.34171 14.7071 4.73223L15.2678 5.29289C15.6583 5.68342 15.6583 6.31658 15.2678 6.70711L7.41421 14.5607C7.149 14.842 6.78929 15 6.41421 15H5Z" fill="#fff"/>
+                    <rect x="4" y="15" width="12" height="2" rx="1" fill="#fff"/>
+                  </svg>
+                </button>
+                <button class="icon-btn delete" title="Eliminar" (click)="onDeleteAccount(acc)">
+                  <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M8 4H12M4 6H16M15 6L14.2987 14.5193C14.1935 16.0975 12.8821 17.3 11.3 17.3H8.7C7.11792 17.3 5.80653 16.0975 5.70133 14.5193L5 6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="11.6" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
+                    <rect x="7" y="5" width="6" height="2" rx="1" fill="#fff"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <div class="accordion-content" *ngIf="acc.showDetails">
+                <div class="detail-row">
+                  <span class="detail-label">Gr Nombre:</span>
+                  <span class="detail-value">{{ acc.grupoNombre || '-' }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Nivel:</span>
+                  <span class="detail-value">{{ acc.nivel }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">SF:</span>
+                  <span class="detail-value">{{ acc.sf }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Código producto:</span>
+                  <span class="detail-value">{{ acc.codigoProducto }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Grupo Renta:</span>
+                  <span class="detail-value">{{ acc.grupoRenta }}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="budget-pagination" *ngIf="showPagination">
+        <span>Cantidad</span>
+        <select>
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+        </select>
+        <span>1 de 3</span>
+        <button>&lt;&lt;</button>
+        <button>&lt;</button>
+        <button>&gt;</button>
+        <button>&gt;&gt;</button>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Modal de confirmación para eliminar cuenta -->
+  <div class="modal-overlay" *ngIf="showDeleteConfirmation" (click)="closeDeleteConfirmation()">
+    <div class="modal-container delete-confirmation" (click)="$event.stopPropagation()">
+      <div class="modal-header delete-header">
+        <button class="close-btn" (click)="closeDeleteConfirmation()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M12 4l-8 8m0-8l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        
-
       </div>
-    </div>
-    <table class="budget-table">
-      <thead>
-        <tr>
-          <th class="details-header">Detalles</th>
-          <th>Rubro</th>
-          <th>Nombre</th>
-          <th class="options-header">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let acc of filteredAccounts" class="account-row">
-          <td class="details-cell">
-            <button class="accordion-toggle" (click)="toggleAccordion(acc)">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M4 6L8 10L12 6" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>Más detalles</span>
-            </button>
-          </td>
-          <td class="rubro-cell">
-            <span class="rubro-text">{{ acc.rubro }}</span>
-          </td>
-          <td>{{ acc.nombre }}</td>
-          <td class="options-cell">
-            <div class="action-buttons-container">
-              <button class="icon-btn add" title="Agregar" (click)="onAddAccount()">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="9" y="4" width="2" height="12" rx="1" fill="#fff"/>
-                  <rect x="4" y="9" width="12" height="2" rx="1" fill="#fff"/>
-                </svg>
-              </button>
-              <button class="icon-btn edit" title="Editar" (click)="onEditAccount(acc)">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M5 15V13.5858C5 13.2107 5.15804 12.851 5.43934 12.5858L13.2929 4.73223C13.6834 4.34171 14.3166 4.34171 14.7071 4.73223L15.2678 5.29289C15.6583 5.68342 15.6583 6.31658 15.2678 6.70711L7.41421 14.5607C7.149 14.842 6.78929 15 6.41421 15H5Z" fill="#fff"/>
-                  <rect x="4" y="15" width="12" height="2" rx="1" fill="#fff"/>
-                </svg>
-              </button>
-              <button class="icon-btn delete" title="Eliminar" (click)="onDeleteAccount(acc)">
-                <svg class="icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M8 4H12M4 6H16M15 6L14.2987 14.5193C14.1935 16.0975 12.8821 17.3 11.3 17.3H8.7C7.11792 17.3 5.80653 16.0975 5.70133 14.5193L5 6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="11.6" y="9" width="1.2" height="4" rx="0.6" fill="#F55E5E"/>
-                  <rect x="7" y="5" width="6" height="2" rx="1" fill="#fff"/>
-                </svg>
-              </button>
-            </div>
-            
-            <div class="accordion-content" *ngIf="acc.showDetails">
-              <div class="detail-row">
-                <span class="detail-label">Gr Nombre:</span>
-                <span class="detail-value">{{ acc.grupoNombre || '-' }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">Nivel:</span>
-                <span class="detail-value">{{ acc.nivel }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">SF:</span>
-                <span class="detail-value">{{ acc.sf }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">Código producto:</span>
-                <span class="detail-value">{{ acc.codigoProducto }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">Grupo Renta:</span>
-                <span class="detail-value">{{ acc.grupoRenta }}</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="budget-pagination" *ngIf="showPagination">
-      <span>Cantidad</span>
-      <select>
-        <option>10</option>
-        <option>25</option>
-        <option>50</option>
-      </select>
-      <span>1 de 3</span>
-      <button>&lt;&lt;</button>
-      <button>&lt;</button>
-      <button>&gt;</button>
-      <button>&gt;&gt;</button>
-    </div>
-  </main>
-</div>
-
-<!-- Modal de confirmación para eliminar cuenta -->
-<div class="modal-overlay" *ngIf="showDeleteConfirmation" (click)="closeDeleteConfirmation()">
-  <div class="modal-container delete-confirmation" (click)="$event.stopPropagation()">
-    <div class="modal-header delete-header">
-      <button class="close-btn" (click)="closeDeleteConfirmation()">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M12 4l-8 8m0-8l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="delete-content">
-      <h3>¿Desea eliminar cuenta de presupuesto?</h3>
-      <p>Recuerde que este proceso es irreversible.</p>
       
-      <div class="delete-actions">
-        <button class="btn-cancel" (click)="closeDeleteConfirmation()">Cancelar</button>
-        <button class="btn-delete" (click)="confirmDelete()">Eliminar</button>
+      <div class="delete-content">
+        <h3>¿Desea eliminar cuenta de presupuesto?</h3>
+        <p>Recuerde que este proceso es irreversible.</p>
+        
+        <div class="delete-actions">
+          <button class="btn-cancel" (click)="closeDeleteConfirmation()">Cancelar</button>
+          <button class="btn-delete" (click)="confirmDelete()">Eliminar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Modal para agregar nueva cuenta -->
-<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>{{ isEditMode ? 'Editar Cuenta Presupuestal' : 'Nueva Cuenta Presupuestal' }}</h2>
-      <button class="close-btn" (click)="closeModal()">×</button>
-    </div>
-    
-    <!-- Progress Steps -->
-    <div class="progress-steps">
-      <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
-        <div class="step-circle">
-          <svg *ngIf="currentStep > 1" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span *ngIf="currentStep === 1">✏️</span>
-          <span *ngIf="currentStep !== 1 && currentStep <= 1">1</span>
-        </div>
-        <span class="step-label">Datos Generales</span>
+  
+  <!-- Modal para agregar nueva cuenta -->
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ isEditMode ? 'Editar Cuenta Presupuestal' : 'Nueva Cuenta Presupuestal' }}</h2>
+        <button class="close-btn" (click)="closeModal()">×</button>
       </div>
       
-      <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
-        <div class="step-circle">
-          <svg *ngIf="currentStep > 2" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span *ngIf="currentStep === 2">✏️</span>
-          <span *ngIf="currentStep !== 2 && currentStep <= 2">2</span>
-        </div>
-        <span class="step-label">Enlaces Sifse y SIA</span>
-      </div>
-      
-      <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
-        <div class="step-circle">
-          <svg *ngIf="currentStep > 3" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span *ngIf="currentStep === 3">✏️</span>
-          <span *ngIf="currentStep !== 3 && currentStep <= 3">3</span>
-        </div>
-        <span class="step-label">Enlaces CGR y FUT</span>
-      </div>
-      
-      <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep > 4">
-        <div class="step-circle">
-          <svg *ngIf="currentStep > 4" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span *ngIf="currentStep === 4">✏️</span>
-          <span *ngIf="currentStep !== 4 && currentStep <= 4">4</span>
-        </div>
-        <span class="step-label">Enlaces CCPET</span>
-      </div>
-    </div>
-    <!-- Form Content -->
-    <div class="form-content">
-      <!-- Step 1: Datos Generales -->
-      <div class="form-step" *ngIf="currentStep === 1">
-        <form [formGroup]="accountForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="rubro">Rubro</label>
-            <input type="text" id="rubro" formControlName="rubro" [class.error]="accountForm.get('rubro')?.invalid && accountForm.get('rubro')?.touched">
-            <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['required'] && accountForm.get('rubro')?.touched">
-              Este campo es requerido
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['maxlength'] && accountForm.get('rubro')?.touched">
-              El rubro no puede exceder 200 caracteres
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['rubroExists'] && accountForm.get('rubro')?.touched">
-              Este rubro ya existe en el catálogo
-            </span>
+      <!-- Progress Steps -->
+      <div class="progress-steps">
+        <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 1" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span *ngIf="currentStep === 1">✏️</span>
+            <span *ngIf="currentStep !== 1 && currentStep <= 1">1</span>
           </div>
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" formControlName="nombre" [class.error]="accountForm.get('nombre')?.invalid && accountForm.get('nombre')?.touched">
-            <span class="error-message" *ngIf="accountForm.get('nombre')?.errors?.['required'] && accountForm.get('nombre')?.touched">
-              Este campo es requerido
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('nombre')?.errors?.['maxlength'] && accountForm.get('nombre')?.touched">
-              El nombre no puede exceder 200 caracteres
-            </span>
-          </div>
+          <span class="step-label">Datos Generales</span>
         </div>
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nivel">Nivel</label>
-            <input type="text" id="nivel" formControlName="nivel" [class.error]="accountForm.get('nivel')?.invalid && accountForm.get('nivel')?.touched">
-            <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['required'] && accountForm.get('nivel')?.touched">
-              Este campo es requerido
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['min'] && accountForm.get('nivel')?.touched">
-              El nivel debe ser mayor o igual a 1
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['maxlength'] && accountForm.get('nivel')?.touched">
-              El nivel no puede exceder 200 caracteres
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['pattern'] && accountForm.get('nivel')?.touched">
-              El nivel solo puede contener caracteres alfanuméricos
-            </span>
+        <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 2" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span *ngIf="currentStep === 2">✏️</span>
+            <span *ngIf="currentStep !== 2 && currentStep <= 2">2</span>
           </div>
-          <div class="form-group">
-            <label for="tipoRenta">Tipo de Renta</label>
-            <select id="tipoRenta" formControlName="tipoRenta" [class.error]="accountForm.get('tipoRenta')?.invalid && accountForm.get('tipoRenta')?.touched">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let tipo of tipoRentaOptions" [value]="tipo.value">{{tipo.label}}</option>
-            </select>
-            <span class="error-message" *ngIf="accountForm.get('tipoRenta')?.invalid && accountForm.get('tipoRenta')?.touched">
-              Este campo es requerido
-            </span>
-          </div>
+          <span class="step-label">Enlaces Sifse y SIA</span>
         </div>
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="unidad">Unidad</label>
-            <select id="unidad" formControlName="unidad" [class.error]="accountForm.get('unidad')?.invalid && accountForm.get('unidad')?.touched">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let unidad of unidadOptions" [value]="unidad.value">{{unidad.label}}</option>
-            </select>
-            <span class="error-message" *ngIf="accountForm.get('unidad')?.invalid && accountForm.get('unidad')?.touched">
-              Este campo es requerido
-            </span>
+        <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 3" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span *ngIf="currentStep === 3">✏️</span>
+            <span *ngIf="currentStep !== 3 && currentStep <= 3">3</span>
           </div>
-          <div class="form-group">
-            <label for="grupoRenta">Grupo de Renta (FF)</label>
-            <select id="grupoRenta" formControlName="grupoRenta" [class.error]="accountForm.get('grupoRenta')?.invalid && accountForm.get('grupoRenta')?.touched">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let grupo of grupoRentaOptions" [value]="grupo.value">{{grupo.label}}</option>
-            </select>
-            <span class="error-message" *ngIf="accountForm.get('grupoRenta')?.invalid && accountForm.get('grupoRenta')?.touched">
-              Este campo es requerido
-            </span>
-          </div>
+          <span class="step-label">Enlaces CGR y FUT</span>
         </div>
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="codigoHomologado">Código Homologado CICP</label>
-            <select id="codigoHomologado" formControlName="codigoHomologado" [class.error]="accountForm.get('codigoHomologado')?.invalid && accountForm.get('codigoHomologado')?.touched">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let codigo of codigoHomologadoOptions" [value]="codigo.value">{{codigo.label}}</option>
-            </select>
-            <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['required'] && accountForm.get('codigoHomologado')?.touched">
-              Este campo es requerido
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['maxlength'] && accountForm.get('codigoHomologado')?.touched">
-              El código no puede exceder 10 caracteres
-            </span>
-            <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['codigoExists'] && accountForm.get('codigoHomologado')?.touched">
-              Este código ya existe en el catálogo
-            </span>
+        <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep > 4">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 4" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13.5 4.5L6 12L2.5 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span *ngIf="currentStep === 4">✏️</span>
+            <span *ngIf="currentStep !== 4 && currentStep <= 4">4</span>
           </div>
+          <span class="step-label">Enlaces CCPET</span>
         </div>
+      </div>
+      <!-- Form Content -->
+      <div class="form-content">
+        <!-- Step 1: Datos Generales -->
+        <div class="form-step" *ngIf="currentStep === 1">
+          <form [formGroup]="accountForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="rubro">Rubro</label>
+              <input type="text" id="rubro" formControlName="rubro" [class.error]="accountForm.get('rubro')?.invalid && accountForm.get('rubro')?.touched">
+              <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['required'] && accountForm.get('rubro')?.touched">
+                Este campo es requerido
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['maxlength'] && accountForm.get('rubro')?.touched">
+                El rubro no puede exceder 200 caracteres
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('rubro')?.errors?.['rubroExists'] && accountForm.get('rubro')?.touched">
+                Este rubro ya existe en el catálogo
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" formControlName="nombre" [class.error]="accountForm.get('nombre')?.invalid && accountForm.get('nombre')?.touched">
+              <span class="error-message" *ngIf="accountForm.get('nombre')?.errors?.['required'] && accountForm.get('nombre')?.touched">
+                Este campo es requerido
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('nombre')?.errors?.['maxlength'] && accountForm.get('nombre')?.touched">
+                El nombre no puede exceder 200 caracteres
+              </span>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nivel">Nivel</label>
+              <input type="text" id="nivel" formControlName="nivel" [class.error]="accountForm.get('nivel')?.invalid && accountForm.get('nivel')?.touched">
+              <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['required'] && accountForm.get('nivel')?.touched">
+                Este campo es requerido
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['min'] && accountForm.get('nivel')?.touched">
+                El nivel debe ser mayor o igual a 1
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['maxlength'] && accountForm.get('nivel')?.touched">
+                El nivel no puede exceder 200 caracteres
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('nivel')?.errors?.['pattern'] && accountForm.get('nivel')?.touched">
+                El nivel solo puede contener caracteres alfanuméricos
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="tipoRenta">Tipo de Renta</label>
+              <select id="tipoRenta" formControlName="tipoRenta" [class.error]="accountForm.get('tipoRenta')?.invalid && accountForm.get('tipoRenta')?.touched">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let tipo of tipoRentaOptions" [value]="tipo.value">{{tipo.label}}</option>
+              </select>
+              <span class="error-message" *ngIf="accountForm.get('tipoRenta')?.invalid && accountForm.get('tipoRenta')?.touched">
+                Este campo es requerido
+              </span>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="unidad">Unidad</label>
+              <select id="unidad" formControlName="unidad" [class.error]="accountForm.get('unidad')?.invalid && accountForm.get('unidad')?.touched">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let unidad of unidadOptions" [value]="unidad.value">{{unidad.label}}</option>
+              </select>
+              <span class="error-message" *ngIf="accountForm.get('unidad')?.invalid && accountForm.get('unidad')?.touched">
+                Este campo es requerido
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="grupoRenta">Grupo de Renta (FF)</label>
+              <select id="grupoRenta" formControlName="grupoRenta" [class.error]="accountForm.get('grupoRenta')?.invalid && accountForm.get('grupoRenta')?.touched">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let grupo of grupoRentaOptions" [value]="grupo.value">{{grupo.label}}</option>
+              </select>
+              <span class="error-message" *ngIf="accountForm.get('grupoRenta')?.invalid && accountForm.get('grupoRenta')?.touched">
+                Este campo es requerido
+              </span>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="codigoHomologado">Código Homologado CICP</label>
+              <select id="codigoHomologado" formControlName="codigoHomologado" [class.error]="accountForm.get('codigoHomologado')?.invalid && accountForm.get('codigoHomologado')?.touched">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let codigo of codigoHomologadoOptions" [value]="codigo.value">{{codigo.label}}</option>
+              </select>
+              <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['required'] && accountForm.get('codigoHomologado')?.touched">
+                Este campo es requerido
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['maxlength'] && accountForm.get('codigoHomologado')?.touched">
+                El código no puede exceder 10 caracteres
+              </span>
+              <span class="error-message" *ngIf="accountForm.get('codigoHomologado')?.errors?.['codigoExists'] && accountForm.get('codigoHomologado')?.touched">
+                Este código ya existe en el catálogo
+              </span>
+            </div>
+          </div>
+          </form>
+        </div>
+  
+        <!-- Step 2: Enlaces Sifse y SIA -->
+        <div *ngIf="currentStep === 2" class="form-step">
+          <form [formGroup]="accountForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuentaIngresos">Cuenta de ingresos</label>
+              <input type="text" id="cuentaIngresos" formControlName="cuentaIngresos">
+            </div>
+            <div class="form-group">
+              <label for="cuentaBancos">Cuenta de Bancos</label>
+              <input type="text" id="cuentaBancos" formControlName="cuentaBancos">
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuentaCausacionIngresos">Cuenta Causación ingresos</label>
+              <input type="text" id="cuentaCausacionIngresos" formControlName="cuentaCausacionIngresos">
+            </div>
+            <div class="form-group">
+              <label for="tipoIngreso">Tipo Ingreso</label>
+              <select id="tipoIngreso" formControlName="tipoIngreso">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let tipo of tipoIngresoOptions" [value]="tipo.value">{{tipo.label}}</option>
+              </select>
+            </div>
+          </div>
+            
+          <div class="form-row">
+            <div class="form-group">
+              <label for="codigoSubfijoSia">Código Subfijo Sia</label>
+              <input type="text" id="codigoSubfijoSia" formControlName="codigoSubfijoSia">
+            </div>
+            <div class="form-group">
+              <label for="codigoCuentaSia">Código Cuenta Sia</label>
+              <input type="text" id="codigoCuentaSia" formControlName="codigoCuentaSia">
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipoCuentaBancaria">Tipo de Cuenta Bancaria</label>
+              <select id="tipoCuentaBancaria" formControlName="tipoCuentaBancaria">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let tipo of tipoCuentaBancariaOptions" [value]="tipo.value">{{tipo.label}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="banco">Banco</label>
+              <select id="banco" formControlName="banco">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let banco of bancoOptions" [value]="banco.value">{{banco.label}}</option>
+              </select>
+            </div>
+          </div>
+            
+          <div class="form-row">
+            <div class="form-group">
+              <label for="numeroCuenta">Número de Cuenta</label>
+              <input type="text" id="numeroCuenta" formControlName="numeroCuenta">
+            </div>
+            <div class="form-group">
+              <label for="tipoDocumento">Tipo de Documento</label>
+              <select id="tipoDocumento" formControlName="tipoDocumento">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let tipo of tipoDocumentoOptions" [value]="tipo.value">{{tipo.label}}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="numeroDocumento">Número de Documento</label>
+              <input type="text" id="numeroDocumento" formControlName="numeroDocumento">
+            </div>
+            <div class="form-group">
+              <label for="tipoPersona">Tipo de Persona</label>
+              <select id="tipoPersona" formControlName="tipoPersona">
+                <option value="" disabled selected>Seleccione...</option>
+                <option *ngFor="let tipo of tipoPersonaOptions" [value]="tipo.value">{{tipo.label}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombreTitular">Nombre del Titular</label>
+              <input type="text" id="nombreTitular" formControlName="nombreTitular">
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <input type="text" id="descripcion" formControlName="descripcion">
+            </div>
+          </div>
+          </form>
+        </div>
+  
+        <!-- Step 3: Enlaces CGR y FUT -->
+        <div *ngIf="currentStep === 3" class="form-step">
+          <form [formGroup]="accountForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fut">FUT</label>
+              <select id="fut" formControlName="fut">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let fut of tipoFutOptions" [value]="fut.value">{{fut.label}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="fffut">FFFUT</label>
+              <select id="fffut" formControlName="fffut">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let fffut of tipoFffutOptions" [value]="fffut.value">{{fffut.label}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="futi">FUTI</label>
+              <select id="futi" formControlName="futi">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let futi of tipoFutiOptions" [value]="futi.value">{{futi.label}}</option>
+              </select>
+            </div>
+          </div>
         </form>
+        </div>
+  
+        <!-- Step 4: Enlaces CCPET -->
+        <div *ngIf="currentStep === 4" class="form-step">
+          <form [formGroup]="accountForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuentaTipoNorma">Cuenta Tipo Norma</label>
+              <select id="cuentaTipoNorma" formControlName="cuentaTipoNorma">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let cuenta of cuentaTipoNormaOptions" [value]="cuenta.value">{{cuenta.label}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="cuipoNumeroFecha">CUIPO número de fecha Norma</label>
+              <input type="text" id="cuipoNumeroFecha" formControlName="cuipoNumeroFecha" placeholder="">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuipoCpc">CUIPO CPC</label>
+              <select id="cuipoCpc" formControlName="cuipoCpc">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let cuipo of cuipoCpcOptions" [value]="cuipo.value">{{cuipo.label}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="cuipoFuenteFinanciacion">CUIPO Fuente Financiación</label>
+              <select id="cuipoFuenteFinanciacion" formControlName="cuipoFuenteFinanciacion">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let fuente of cuipoFuenteFinanciacionOptions" [value]="fuente.value">{{fuente.label}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuipoTerceroChip">CUIPO Tercero CHIP</label>
+              <select id="cuipoTerceroChip" formControlName="cuipoTerceroChip">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let tercero of cuipoTerceroChipOptions" [value]="tercero.value">{{tercero.label}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="cuipoPoliticaPublica">CUIPO política pública</label>
+              <select id="cuipoPoliticaPublica" formControlName="cuipoPoliticaPublica">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let politica of cuipoPoliticaPublicaOptions" [value]="politica.value">{{politica.label}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cuipoDetalleSectorialPi">CUIPO Detalle sectorial PI</label>
+              <select id="cuipoDetalleSectorialPi" formControlName="cuipoDetalleSectorialPi">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let detalle of cuipoDetalleSectorialPiOptions" [value]="detalle.value">{{detalle.label}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="cuipoDetalleSectorialEi">CUIPO Detalle sectorial EI</label>
+              <select id="cuipoDetalleSectorialEi" formControlName="cuipoDetalleSectorialEi">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let detalle of cuipoDetalleSectorialEiOptions" [value]="detalle.value">{{detalle.label}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="homologadoIcld">Homologado ICLD Ley 99</label>
+              <select id="homologadoIcld" formControlName="homologadoIcld">
+                <option value="" disabled selected>Selecciona</option>
+                <option *ngFor="let homologado of homologadoIcldOptions" [value]="homologado.value">{{homologado.label}}</option>
+              </select>
+            </div>
+          </div>
+          </form>
+        </div>
       </div>
-
-      <!-- Step 2: Enlaces Sifse y SIA -->
-      <div *ngIf="currentStep === 2" class="form-step">
-        <form [formGroup]="accountForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuentaIngresos">Cuenta de ingresos</label>
-            <input type="text" id="cuentaIngresos" formControlName="cuentaIngresos">
-          </div>
-          <div class="form-group">
-            <label for="cuentaBancos">Cuenta de Bancos</label>
-            <input type="text" id="cuentaBancos" formControlName="cuentaBancos">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuentaCausacionIngresos">Cuenta Causación ingresos</label>
-            <input type="text" id="cuentaCausacionIngresos" formControlName="cuentaCausacionIngresos">
-          </div>
-          <div class="form-group">
-            <label for="tipoIngreso">Tipo Ingreso</label>
-            <select id="tipoIngreso" formControlName="tipoIngreso">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let tipo of tipoIngresoOptions" [value]="tipo.value">{{tipo.label}}</option>
-            </select>
-          </div>
-        </div>
-          
-        <div class="form-row">
-          <div class="form-group">
-            <label for="codigoSubfijoSia">Código Subfijo Sia</label>
-            <input type="text" id="codigoSubfijoSia" formControlName="codigoSubfijoSia">
-          </div>
-          <div class="form-group">
-            <label for="codigoCuentaSia">Código Cuenta Sia</label>
-            <input type="text" id="codigoCuentaSia" formControlName="codigoCuentaSia">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="tipoCuentaBancaria">Tipo de Cuenta Bancaria</label>
-            <select id="tipoCuentaBancaria" formControlName="tipoCuentaBancaria">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let tipo of tipoCuentaBancariaOptions" [value]="tipo.value">{{tipo.label}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="banco">Banco</label>
-            <select id="banco" formControlName="banco">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let banco of bancoOptions" [value]="banco.value">{{banco.label}}</option>
-            </select>
-          </div>
-        </div>
-          
-        <div class="form-row">
-          <div class="form-group">
-            <label for="numeroCuenta">Número de Cuenta</label>
-            <input type="text" id="numeroCuenta" formControlName="numeroCuenta">
-          </div>
-          <div class="form-group">
-            <label for="tipoDocumento">Tipo de Documento</label>
-            <select id="tipoDocumento" formControlName="tipoDocumento">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let tipo of tipoDocumentoOptions" [value]="tipo.value">{{tipo.label}}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="numeroDocumento">Número de Documento</label>
-            <input type="text" id="numeroDocumento" formControlName="numeroDocumento">
-          </div>
-          <div class="form-group">
-            <label for="tipoPersona">Tipo de Persona</label>
-            <select id="tipoPersona" formControlName="tipoPersona">
-              <option value="" disabled selected>Seleccione...</option>
-              <option *ngFor="let tipo of tipoPersonaOptions" [value]="tipo.value">{{tipo.label}}</option>
-            </select>
-          </div>
-        </div>
+  
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="previousStep()" [disabled]="currentStep === 1">
+          Anterior
+        </button>
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nombreTitular">Nombre del Titular</label>
-            <input type="text" id="nombreTitular" formControlName="nombreTitular">
-          </div>
-          <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <input type="text" id="descripcion" formControlName="descripcion">
-          </div>
-        </div>
-        </form>
+        <button type="button" class="btn-primary" (click)="nextStep()" *ngIf="currentStep < 4">
+          Siguiente
+        </button>
+        
+        <button type="button" class="btn-primary" (click)="saveAccount()" *ngIf="currentStep === 4">
+          Guardar
+        </button>
       </div>
-
-      <!-- Step 3: Enlaces CGR y FUT -->
-      <div *ngIf="currentStep === 3" class="form-step">
-        <form [formGroup]="accountForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fut">FUT</label>
-            <select id="fut" formControlName="fut">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let fut of tipoFutOptions" [value]="fut.value">{{fut.label}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="fffut">FFFUT</label>
-            <select id="fffut" formControlName="fffut">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let fffut of tipoFffutOptions" [value]="fffut.value">{{fffut.label}}</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="futi">FUTI</label>
-            <select id="futi" formControlName="futi">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let futi of tipoFutiOptions" [value]="futi.value">{{futi.label}}</option>
-            </select>
-          </div>
-        </div>
-      </form>
-      </div>
-
-      <!-- Step 4: Enlaces CCPET -->
-      <div *ngIf="currentStep === 4" class="form-step">
-        <form [formGroup]="accountForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuentaTipoNorma">Cuenta Tipo Norma</label>
-            <select id="cuentaTipoNorma" formControlName="cuentaTipoNorma">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let cuenta of cuentaTipoNormaOptions" [value]="cuenta.value">{{cuenta.label}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="cuipoNumeroFecha">CUIPO número de fecha Norma</label>
-            <input type="text" id="cuipoNumeroFecha" formControlName="cuipoNumeroFecha" placeholder="">
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuipoCpc">CUIPO CPC</label>
-            <select id="cuipoCpc" formControlName="cuipoCpc">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let cuipo of cuipoCpcOptions" [value]="cuipo.value">{{cuipo.label}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="cuipoFuenteFinanciacion">CUIPO Fuente Financiación</label>
-            <select id="cuipoFuenteFinanciacion" formControlName="cuipoFuenteFinanciacion">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let fuente of cuipoFuenteFinanciacionOptions" [value]="fuente.value">{{fuente.label}}</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuipoTerceroChip">CUIPO Tercero CHIP</label>
-            <select id="cuipoTerceroChip" formControlName="cuipoTerceroChip">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let tercero of cuipoTerceroChipOptions" [value]="tercero.value">{{tercero.label}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="cuipoPoliticaPublica">CUIPO política pública</label>
-            <select id="cuipoPoliticaPublica" formControlName="cuipoPoliticaPublica">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let politica of cuipoPoliticaPublicaOptions" [value]="politica.value">{{politica.label}}</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cuipoDetalleSectorialPi">CUIPO Detalle sectorial PI</label>
-            <select id="cuipoDetalleSectorialPi" formControlName="cuipoDetalleSectorialPi">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let detalle of cuipoDetalleSectorialPiOptions" [value]="detalle.value">{{detalle.label}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="cuipoDetalleSectorialEi">CUIPO Detalle sectorial EI</label>
-            <select id="cuipoDetalleSectorialEi" formControlName="cuipoDetalleSectorialEi">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let detalle of cuipoDetalleSectorialEiOptions" [value]="detalle.value">{{detalle.label}}</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="homologadoIcld">Homologado ICLD Ley 99</label>
-            <select id="homologadoIcld" formControlName="homologadoIcld">
-              <option value="" disabled selected>Selecciona</option>
-              <option *ngFor="let homologado of homologadoIcldOptions" [value]="homologado.value">{{homologado.label}}</option>
-            </select>
-          </div>
-        </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Modal Footer -->
-    <div class="modal-footer">
-      <button type="button" class="btn-secondary" (click)="previousStep()" [disabled]="currentStep === 1">
-        Anterior
-      </button>
-      
-      <button type="button" class="btn-primary" (click)="nextStep()" *ngIf="currentStep < 4">
-        Siguiente
-      </button>
-      
-      <button type="button" class="btn-primary" (click)="saveAccount()" *ngIf="currentStep === 4">
-        Guardar
-      </button>
     </div>
   </div>
 </div>

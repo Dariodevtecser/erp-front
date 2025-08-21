@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -10,6 +11,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent {
+  breadcrumbs = ['Crear usuario'];
   userForm: FormGroup;
 
   // Paso actual del formulario (para el stepper)
@@ -18,7 +20,7 @@ export class CreateUserComponent {
   // Tipos de documento disponibles
   documentTypes = ['Cédula', 'Pasaporte', 'Cédula de extranjería', 'Otro'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.userForm = this.fb.group({
       fullName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{7,15}$/)]],
@@ -32,9 +34,7 @@ export class CreateUserComponent {
 
   // Avanzar al siguiente paso
   goNext() {
-    if (this.currentStep < 2) { // ajusta si en el futuro hay más pasos
-      this.currentStep++;
-    }
+    this.router.navigate(['/app/admin/permissions']);
   }
 
   // Retroceder al paso anterior

@@ -9,7 +9,7 @@ import { SidebarService } from '../services/sidebar.service';
 @Component({
   selector: 'lib-home',
   standalone: true,
-  imports: [CommonModule, CardComponent, FooterComponent],
+  imports: [CommonModule, CardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

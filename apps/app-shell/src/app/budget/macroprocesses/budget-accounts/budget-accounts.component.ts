@@ -74,7 +74,7 @@ const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
 @Component({
   selector: 'app-budget-accounts',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './budget-accounts.component.html',
   styleUrls: ['./budget-accounts.component.scss']
 })
