@@ -18,63 +18,91 @@ export class LoginComponent {
 
   constructor(private router: Router, private authService: AuthService){}
 
+  ngOnInit() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('rol');
+  }
+
+isTokenExpired(token: string): boolean {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp;
+    if (!exp) return true;
+    // exp is in seconds, Date.now() is in ms
+    return Date.now() >= exp * 1000;
+  } catch (e) {
+    return true;
+  }
+}
+
   login(){
-    // const credentials = {
-    //   email: this.username,
-    //   password: this.password
-    // };
-    // this.authService.login(credentials).subscribe(
-    //   (resp: any) => {
-    //     if(resp.rol === 'superadmin'){
-    //       this.router.navigate(['/app/super-admin']);
-    //     } else if(resp.rol === 'admin'){
-    //       this.router.navigate(['/app/admin']);
-    //     } else {
-    //       this.router.navigate(['/app/home']);
-    //     }
-    //     localStorage.setItem('token', resp.token)
-    //   },
-    //   (error) => {
-    //     Swal.fire({
-    //     icon: 'error',
-    //     title: 'Datos incorrectos',
-    //     text: 'Por favor revisa que las credenciales coincidan',
-    //     showCloseButton: true
-    //   });
-    //   }
-    // );
-    if(this.username === 'superadmin' && this.password === '12345'){
-      this.router.navigate(['/app/super-admin']);
-      Swal.fire({
-        icon: 'success',
-        title: 'Datos correctos',
-        text: 'Bienvenido al ERP',
-        showCloseButton: true
-      });
-    } else if(this.username === 'admin' &&  this.password === '12345'){
-      this.router.navigate(['/app/admin']);
-      Swal.fire({
-        icon: 'success',
-        title: 'Datos correctos',
-        text: 'Bienvenido Administrador',
-        showCloseButton: true
-      });
-    } else if(this.username === 'user1' && this.password === '12345'){
-      this.router.navigate(['/app/home']);
-      Swal.fire({
-        icon: 'success',
-        title: 'Datos correctos',
-        text: 'Bienvenido Usuario 1',
-        showCloseButton: true
-      });
-    } else {
-      Swal.fire({
+    const credentials = {
+      email: this.username,
+      password: this.password
+    };
+    this.authService.login(credentials).subscribe(
+      (resp: any) => {
+        // Guardar token y rol en localStorage
+        localStorage.setItem('token', resp.token);
+        if (resp.roles && resp.roles.length > 0) {
+          localStorage.setItem('rol', resp.roles[0]);
+        }
+        // Navegación según rol
+        if(resp.roles && resp.roles[0] === 'Super_Administrador'){
+          this.router.navigate(['/app/super-admin']);
+        } else if(resp.roles && resp.roles[0] === 'Administrador'){
+          this.router.navigate(['/app/admin']);
+        } else {
+          this.router.navigate(['/app/home']);
+        }
+        Swal.fire({
+          icon: 'success',
+          title: 'Login exitoso',
+          text: 'Bienvenido al sistema ERP',
+          showCloseButton: true
+        })
+      },
+      (error) => {
+        Swal.fire({
         icon: 'error',
         title: 'Datos incorrectos',
         text: 'Por favor revisa que las credenciales coincidan',
         showCloseButton: true
       });
-    }
+      }
+    );
+    // if(this.username === 'superadmin' && this.password === '12345'){
+    //   this.router.navigate(['/app/super-admin']);
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: 'Datos correctos',
+    //     text: 'Bienvenido al ERP',
+    //     showCloseButton: true
+    //   });
+    // } else if(this.username === 'admin' &&  this.password === '12345'){
+    //   this.router.navigate(['/app/admin']);
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: 'Datos correctos',
+    //     text: 'Bienvenido Administrador',
+    //     showCloseButton: true
+    //   });
+    // } else if(this.username === 'user1' && this.password === '12345'){
+    //   this.router.navigate(['/app/home']);
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: 'Datos correctos',
+    //     text: 'Bienvenido Usuario 1',
+    //     showCloseButton: true
+    //   });
+    // } else {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Datos incorrectos',
+    //     text: 'Por favor revisa que las credenciales coincidan',
+    //     showCloseButton: true
+    //   });
+    // }
   }
 
 }

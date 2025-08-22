@@ -125,7 +125,8 @@ export class SidebarComponent {
   }
 
   logout() {
-    // Implementa la lógica de logout aquí
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   toggleSidebar(){
