@@ -1,10 +1,17 @@
 .usuarios-wrapper {
+  box-sizing: border-box;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 32px;
   margin: 32px auto;
-  max-width: 1100px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: visible;
+}
+
+.usuarios-wrapper * {
+  box-sizing: inherit;
 }
 
 .usuarios-header {
@@ -13,15 +20,18 @@
   justify-content: space-between;
   gap: 32px;
   margin-bottom: 24px;
+
   div {
     gap: 20px;
     display: flex;
     flex-direction: column;
+
     h1 {
-      font-size: 2em;
+      font-size: 1.2em;
       font-weight: bold;
       margin: 0;
     }
+
     .usuarios-total {
       color: #64748b;
       font-size: 1.1em;
@@ -29,38 +39,39 @@
       text-align: left;
     }
   }
+
   .nuevo-usuario-btn {
-  background: #f8fafc;
-  border: 2px solid #a78bfa; // azul suave
-  color: #2D3748;
-  border-radius: 12px;
-  padding: 14px 32px;
-  font-weight: bold;
-  font-size: 1.1em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: none;
-  transition: background 0.2s, border 0.2s;
-  .plus-icon {
+    background: #f8fafc;
+    border: 2px solid #a78bfa;
+    color: #2D3748;
+    border-radius: 12px;
+    padding: 14px 32px;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    svg {
-      display: block;
+    gap: 12px;
+    transition: background 0.2s, border 0.2s;
+
+    .plus-icon {
+      display: flex;
+      align-items: center;
+    }
+
+    &:hover {
+      background: #eef2ff;
+      border-color: #7B61FF;
     }
   }
-  &:hover {
-    background: #eef2ff;
-    border-color: #7B61FF;
-  }
-}
 }
 
 .usuarios-table-wrapper {
   background: #f8fafc;
   border-radius: 16px;
   padding: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .usuarios-table tr.deshabilitado td {
@@ -72,37 +83,40 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  th, td {
+  table-layout: auto;
+
+  th,
+  td {
     padding: 14px 18px;
     text-align: left;
+    vertical-align: middle;
+    white-space: normal;
+    word-break: break-word;
   }
+
   th {
-    background: #fff; // fondo blanco
+    background: #fff;
     color: #222;
     font-weight: bold;
-    border-bottom: 2px solid #e5e7eb; // borde gris claro
-    font-size: 1.1em;
+    border-bottom: 2px solid #e5e7eb;
+    font-size: 0.95em;
     position: relative;
-    .arrow {
-      font-size: 1em;
-      color: #bdbdbd; // flecha gris
-      margin-left: 4px;
-    }
   }
-  tr {
-    transition: background 0.2s;
-    &:hover {
-      background: #f3f4f6;
-    }
+
+  tr:hover {
+    background: #f3f4f6;
   }
+
   td {
     background: #fff;
     border-bottom: 1px solid #e5e7eb;
-    font-size: 1em;
+    font-size: 0.9em;
   }
+
   tr:nth-child(even) td {
     background: #f8fafc;
   }
+
   tr:last-child td {
     border-bottom: none;
   }
@@ -112,14 +126,24 @@
   background: none;
   border: none;
   cursor: pointer;
-  margin-right: 8px;
   padding: 4px;
   font-size: 1.2em;
   transition: color 0.2s;
-  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover svg {
     stroke: #6366f1;
   }
+}
+
+.usuarios-table td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
 
 .usuarios-pagination {
@@ -127,20 +151,25 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 16px;
+
   span {
     color: #64748b;
-    font-size: 1em;
+    font-size: 0.9em;
   }
+
   .pagination-controls {
     display: flex;
     align-items: center;
     gap: 8px;
+
     label {
       color: #64748b;
-      font-size: 1em;
+      font-size: 0.9em;
       margin-right: 4px;
     }
-    select, button {
+
+    select,
+    button {
       padding: 4px 8px;
       border-radius: 6px;
       border: 1px solid #cbd5e1;
@@ -149,16 +178,94 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     .next-btn {
       font-size: 1.1em;
       background: #e0e7ff;
       border: none;
       color: #6366f1;
-      transition: background 0.2s;
+
       &:hover {
         background: #6366f1;
         color: #fff;
       }
     }
   }
+}
+
+/* Laptops medianas 1024–1599px */
+@media (min-width: 1024px) and (max-width: 1599px) {
+  .usuarios-table {
+    /* Elimina table-layout: fixed y white-space: nowrap para evitar scroll horizontal */
+    th,
+    td {
+      overflow: visible;
+      text-overflow: initial;
+      white-space: normal;
+    }
+  }
+}
+
+/* Pantallas grandes (>=1600px) */
+@media (min-width: 1600px) {
+  .usuarios-wrapper {
+    max-width: 1400px;
+    width: 100%;
+  }
+
+  .usuarios-table {
+    /* Elimina table-layout: fixed y white-space: nowrap para evitar scroll horizontal */
+    th, td {
+      overflow: visible;
+      text-overflow: initial;
+      white-space: normal;
+    }
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .usuarios-wrapper {
+    padding: 16px;
+    margin: 16px;
+    width: calc(100% - 32px);
+  }
+
+  .usuarios-header {
+    flex-direction: column;
+    gap: 12px;
+
+    .nuevo-usuario-btn {
+      padding: 10px 16px;
+      font-size: 0.95em;
+    }
+  }
+
+  .usuarios-table {
+    th,
+    td {
+      padding: 10px 12px;
+      font-size: 0.95em;
+      white-space: normal;
+    }
+  }
+
+  .usuarios-table td:last-child {
+    gap: 6px;
+  }
+
+  .usuarios-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.usuarios-table td .break-word {
+  word-break: break-all;
 }

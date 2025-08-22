@@ -1,7 +1,13 @@
+// apps/app/src/app/admin/dashboard/dashboard.component.ts
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from '../../../../../../libs/src/lib/modals/modal.component';
+import { User } from '../../../../../../libs/src/lib/models/user-admin.model';
+import Swal from 'sweetalert2';
+
+// Importa el servicio desde libs (igual que haces con ModalComponent)
+import { AdminService } from '../../../../../../libs/src/lib/services/admin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,25 +16,46 @@ import { ModalComponent } from '../../../../../../libs/src/lib/modals/modal.comp
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   showModal = false;
   modalTitle = '';
   modalMessage = '';
   selectedUser: any = null;
 
-  usuarios = [
-  { cedula: '2283666152', nombre: 'Nestor Ocampo', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Diseñador', activo: true },
-  { cedula: '2283666152', nombre: 'Laura Ruiz', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Desarrollador', activo: true },
-  { cedula: '2283666152', nombre: 'Bárbara Navarro', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Analista contable', activo: true },
-  { cedula: '2283666152', nombre: 'Luis Hernández', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Analista contable', activo: true },
-  { cedula: '2283666152', nombre: 'Laura Ruiz', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Desarrollador', activo: true },
-  { cedula: '2283666152', nombre: 'Luis Hernández', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Analista contable', activo: true },
-  { cedula: '2283666152', nombre: 'Nestor Ocampo', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Usuario', activo: true },
-  { cedula: '2283666152', nombre: 'Laura Ruiz', correo: 'ejemplo@gmail.com', rol: 'Usuarios', cargo: 'Analista contable', activo: true }
-];constructor(private router: Router, private route: ActivatedRoute) {}
+  // ahora viene del API:
+  usuarios: User[] = [];
+  loading = false;
+  errorMsg = '';
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private adminService: AdminService
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarUsuarios();
+  }
+
+  private cargarUsuarios(): void {
+    this.loading = true;
+    this.errorMsg = '';
+
+    this.adminService.getAllUsers().subscribe({
+      next: (users) => {
+        this.usuarios = users;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.errorMsg = 'No se pudieron cargar los usuarios.';
+        console.error('Dashboard -> cargarUsuarios error:', err);
+        this.loading = false;
+      }
+    });
+  }
 
   crearUsuario() {
-    this.router.navigate(['createAdmin'], { relativeTo: this.route });
+    this.router.navigate(['create'], { relativeTo: this.route });
   }
 
   editarUsuario(id: string) {
@@ -50,13 +77,13 @@ export class DashboardComponent {
   }
 
   onConfirm() {
-  if (this.modalTitle === 'Desactivar usuario') {
-    this.selectedUser.activo = false;
-  } else if (this.modalTitle === 'Activar usuario') {
-    this.selectedUser.activo = true;
+    if (this.modalTitle === 'Desactivar usuario') {
+      this.selectedUser.activo = false;
+    } else if (this.modalTitle === 'Activar usuario') {
+      this.selectedUser.activo = true;
+    }
+    this.showModal = false;
   }
-  this.showModal = false;
-}
 
   onCancel() {
     this.showModal = false;
