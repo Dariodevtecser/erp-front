@@ -25,6 +25,38 @@ export interface BudgetAccount {
   usuarioModificacion: string;
   showDetails?: boolean; // Propiedad para controlar la visibilidad del acordeón
   grupoNombre?: string; // Propiedad opcional para el grupo de nombre
+  
+  // Enlaces Sifse y SIA
+  cuentaIngresos?: string;
+  cuentaBancos?: string;
+  cuentaCausacionIngresos?: string;
+  tipoIngreso?: string;
+  codigoSubfijoSia?: string;
+  codigoCuentaSia?: string;
+  tipoCuentaBancaria?: string;
+  banco?: string;
+  numeroCuenta?: string;
+  tipoDocumento?: string;
+  numeroDocumento?: string;
+  tipoPersona?: string;
+  nombreTitular?: string;
+  descripcion?: string;
+  
+  // Enlaces CGR y FUT
+  fut?: string;
+  fffut?: string;
+  futi?: string;
+  
+  // Enlaces CCPET
+  cuentaTipoNorma?: string;
+  cuipoNumeroFecha?: string;
+  cuipoCpc?: string;
+  cuipoFuenteFinanciacion?: string;
+  cuipoTerceroChip?: string;
+  cuipoPoliticaPublica?: string;
+  cuipoDetalleSectorialPi?: string;
+  cuipoDetalleSectorialEi?: string;
+  homologadoIcld?: string;
 }
  
 const BUDGET_ACCOUNTS_MOCK: BudgetAccount[] = [
@@ -86,8 +118,6 @@ export class BudgetAccountsComponent {
   search = '';
   vigencia = 2025;
   tipoPresupuesto = '';
-  unidadEjecutora = '';
-  tipoCuenta = '';
  
   isModalOpen = false;
   isEditMode = false;
@@ -318,7 +348,7 @@ export class BudgetAccountsComponent {
       nombre: account.nombre,
       nivel: account.nivel,
       tipoRenta: account.tipoRenta,
-      unidad: account.unidadEjecutora,
+      unidad: account.unidadEjecutora, // Mantenemos esta asignación ya que unidad es un campo del formulario
       grupoRenta: account.grupoRenta,
       codigoHomologado: account.codigoHomologado,
       // Aquí puedes agregar más campos según sea necesario
@@ -366,8 +396,6 @@ export class BudgetAccountsComponent {
     this.search = '';
     this.vigencia = 2025;
     this.tipoPresupuesto = '';
-    this.unidadEjecutora = '';
-    this.tipoCuenta = '';
     this.filterAccounts();
   }
  
@@ -390,16 +418,6 @@ export class BudgetAccountsComponent {
     // Filtro por tipo de presupuesto
     if (this.tipoPresupuesto) {
       filtered = filtered.filter(account => account.tipoPresupuesto === this.tipoPresupuesto);
-    }
-   
-    // Filtro por unidad ejecutora
-    if (this.unidadEjecutora) {
-      filtered = filtered.filter(account => account.unidadEjecutora === this.unidadEjecutora);
-    }
-   
-    // Filtro por tipo de cuenta (ingreso/gasto)
-    if (this.tipoCuenta) {
-      filtered = filtered.filter(account => account.tipoCuenta === this.tipoCuenta);
     }
    
     this.filteredAccounts = filtered;
@@ -440,8 +458,8 @@ export class BudgetAccountsComponent {
         nivel: account.nivel,
         tipoRenta: account.tipoRenta,
         grupoRenta: account.grupoRenta,
-        codigoHomologado: account.codigoHomologado,
-        unidadEjecutora: account.unidadEjecutora
+        codigoHomologado: account.codigoHomologado
+        // Eliminamos la referencia a unidadEjecutora
       };
     });
    
@@ -462,10 +480,10 @@ export class BudgetAccountsComponent {
       printWindow.document.write('</head><body>');
       printWindow.document.write('<h1>Catálogo de Cuentas</h1>');
       printWindow.document.write('<table>');
-      printWindow.document.write('<tr><th>Rubro</th><th>Nombre</th><th>Nivel</th><th>Tipo Renta</th><th>Grupo Renta</th><th>Código Homologado</th><th>Unidad Ejecutora</th></tr>');
+      printWindow.document.write('<tr><th>Rubro</th><th>Nombre</th><th>Nivel</th><th>Tipo Renta</th><th>Grupo Renta</th><th>Código Homologado</th></tr>');
      
       this.filteredAccounts.forEach(account => {
-        printWindow.document.write(`<tr><td>${account.rubro}</td><td>${account.nombre}</td><td>${account.nivel}</td><td>${account.tipoRenta}</td><td>${account.grupoRenta}</td><td>${account.codigoHomologado}</td><td>${account.unidadEjecutora}</td></tr>`);
+        printWindow.document.write(`<tr><td>${account.rubro}</td><td>${account.nombre}</td><td>${account.nivel}</td><td>${account.tipoRenta}</td><td>${account.grupoRenta}</td><td>${account.codigoHomologado}</td></tr>`);
       });
      
       printWindow.document.write('</table>');
@@ -528,7 +546,48 @@ export class BudgetAccountsComponent {
               // Actualizar los datos del rubro
               this.accounts[index] = {
                 ...this.accounts[index],
-                ...formData,
+                // Datos Generales
+                rubro: formData.rubro,
+                nombre: formData.nombre,
+                nivel: formData.nivel,
+                tipoRenta: formData.tipoRenta,
+                unidadEjecutora: formData.unidad,
+                grupoRenta: formData.grupoRenta,
+                codigoHomologado: formData.codigoHomologado,
+                
+                // Enlaces Sifse y SIA
+                cuentaIngresos: formData.cuentaIngresos || '',
+                cuentaBancos: formData.cuentaBancos || '',
+                cuentaCausacionIngresos: formData.cuentaCausacionIngresos || '',
+                tipoIngreso: formData.tipoIngreso || '',
+                codigoSubfijoSia: formData.codigoSubfijoSia || '',
+                codigoCuentaSia: formData.codigoCuentaSia || '',
+                tipoCuentaBancaria: formData.tipoCuentaBancaria || '',
+                banco: formData.banco || '',
+                numeroCuenta: formData.numeroCuenta || '',
+                tipoDocumento: formData.tipoDocumento || '',
+                numeroDocumento: formData.numeroDocumento || '',
+                tipoPersona: formData.tipoPersona || '',
+                nombreTitular: formData.nombreTitular || '',
+                descripcion: formData.descripcion || '',
+                
+                // Enlaces CGR y FUT
+                fut: formData.fut || '',
+                fffut: formData.fffut || '',
+                futi: formData.futi || '',
+                
+                // Enlaces CCPET
+                cuentaTipoNorma: formData.cuentaTipoNorma || '',
+                cuipoNumeroFecha: formData.cuipoNumeroFecha || '',
+                cuipoCpc: formData.cuipoCpc || '',
+                cuipoFuenteFinanciacion: formData.cuipoFuenteFinanciacion || '',
+                cuipoTerceroChip: formData.cuipoTerceroChip || '',
+                cuipoPoliticaPublica: formData.cuipoPoliticaPublica || '',
+                cuipoDetalleSectorialPi: formData.cuipoDetalleSectorialPi || '',
+                cuipoDetalleSectorialEi: formData.cuipoDetalleSectorialEi || '',
+                homologadoIcld: formData.homologadoIcld || '',
+                
+                // Metadatos
                 fechaModificacion: new Date().toISOString().split('T')[0],
                 usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
               };
@@ -556,8 +615,8 @@ export class BudgetAccountsComponent {
             id: (this.accounts.length + 1).toString(),
             vigencia: this.vigencia,
             tipoPresupuesto: this.tipoPresupuesto || 'Ingresos',
-            unidadEjecutora: formData.unidad,
-            tipoCuenta: 'ingreso',
+            unidadEjecutora: formData.unidad, // Mantenemos esta asignación ya que es parte del modelo de datos
+            tipoCuenta: 'ingreso', // Mantenemos esta asignación ya que es parte del modelo de datos
             rubro: formData.rubro,
             nombre: formData.nombre,
             codigo: formData.rubro, // Usar el rubro como código por defecto
@@ -570,7 +629,39 @@ export class BudgetAccountsComponent {
             activo: true,
             fechaCreacion: new Date().toISOString().split('T')[0],
             fechaModificacion: new Date().toISOString().split('T')[0],
-            usuarioModificacion: 'admin' // Aquí deberías usar el usuario actual
+            usuarioModificacion: 'admin', // Aquí deberías usar el usuario actual
+            
+            // Enlaces Sifse y SIA
+            cuentaIngresos: formData.cuentaIngresos || '',
+            cuentaBancos: formData.cuentaBancos || '',
+            cuentaCausacionIngresos: formData.cuentaCausacionIngresos || '',
+            tipoIngreso: formData.tipoIngreso || '',
+            codigoSubfijoSia: formData.codigoSubfijoSia || '',
+            codigoCuentaSia: formData.codigoCuentaSia || '',
+            tipoCuentaBancaria: formData.tipoCuentaBancaria || '',
+            banco: formData.banco || '',
+            numeroCuenta: formData.numeroCuenta || '',
+            tipoDocumento: formData.tipoDocumento || '',
+            numeroDocumento: formData.numeroDocumento || '',
+            tipoPersona: formData.tipoPersona || '',
+            nombreTitular: formData.nombreTitular || '',
+            descripcion: formData.descripcion || '',
+            
+            // Enlaces CGR y FUT
+            fut: formData.fut || '',
+            fffut: formData.fffut || '',
+            futi: formData.futi || '',
+            
+            // Enlaces CCPET
+            cuentaTipoNorma: formData.cuentaTipoNorma || '',
+            cuipoNumeroFecha: formData.cuipoNumeroFecha || '',
+            cuipoCpc: formData.cuipoCpc || '',
+            cuipoFuenteFinanciacion: formData.cuipoFuenteFinanciacion || '',
+            cuipoTerceroChip: formData.cuipoTerceroChip || '',
+            cuipoPoliticaPublica: formData.cuipoPoliticaPublica || '',
+            cuipoDetalleSectorialPi: formData.cuipoDetalleSectorialPi || '',
+            cuipoDetalleSectorialEi: formData.cuipoDetalleSectorialEi || '',
+            homologadoIcld: formData.homologadoIcld || ''
           };
          
           this.accounts.push(newAccount);
