@@ -20,7 +20,7 @@ export class HeaderComponent {
   nameMap: { [key: string]: string } = {
     'home': 'Home',
     'budget': 'Presupuesto',
-    'macroprocesses': 'Macroprocesos',
+    'processes-generales': 'Procesos Generales',
     'budget-accounts': 'Cuentas de Presupuesto',
     'super-admin': 'Super Administrador',
     'edit': 'Usuario a editar',
