@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { SidebarComponent } from '@erp-frontend/sidebar';
 import Swal from 'sweetalert2';
  
 export interface BudgetAccount {

@@ -40,7 +40,7 @@ export class SidebarComponent {
   setSidebarState(path: string){
     if(path.includes('/budget')){
       this.selectedModule = 'Presupuesto';
-      this.expandedMenu = 'Macroprocesos';
+      this.expandedMenu = 'Procesos Generales';
     }
     else if(path.includes('/seguimiento-fuente-financiacion')){
       this.selectedModule = 'Presupuesto';
@@ -54,9 +54,9 @@ export class SidebarComponent {
 
   menuItems = [
     {
-      label: 'Macroprocesos',
+      label: 'Procesos Generales',
       children: [
-        { label: 'Cuentas De Presupuesto', route: '/app/budget/macroprocesses/budget-accounts' },
+        { label: 'Cuentas De Presupuesto', route: '/app/budget/general-processes/budget-accounts' },
         // { label: 'Solicitudes de Disponibilidad', route: '/solicitudes-disponibilidad' },
         // { label: 'Certificados de Disponibilidad', route: '/certificados-disponibilidad' },
         // { label: 'Registros Presupuestales', route: '/registros-presupuestales' },

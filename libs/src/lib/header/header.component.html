@@ -12,7 +12,7 @@
   </div>
 
   <div class="right-section">
-    <div class="home" (click)="goHome()" style="cursor:pointer;">
+    <div *ngIf="userRole !== 'Super_Administrador'" class="home" (click)="goHome()" style="cursor:pointer;">
       <i class="fas fa-home"></i>
       <span>Home</span>
     </div>
