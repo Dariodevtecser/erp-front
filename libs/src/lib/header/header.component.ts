@@ -15,12 +15,13 @@ export class HeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
   breadcrumbs: string[] = [];
   selectedModule: string | null = null;
+  userRole: string | null = null;
 
   // Mapea los segmentos de ruta a nombres amigables
   nameMap: { [key: string]: string } = {
     'home': 'Home',
     'budget': 'Presupuesto',
-    'processes-generales': 'Procesos Generales',
+    'general-processes': 'Procesos Generales',
     'budget-accounts': 'Cuentas de Presupuesto',
     'super-admin': 'Super Administrador',
     'edit': 'Usuario a editar',
@@ -34,7 +35,8 @@ export class HeaderComponent {
     this.selectedService.selectedModule$.subscribe(name => {
       this.selectedModule = name;
       this.buildBreadcrumbs();
-    })
+    });
+    this.userRole = localStorage.getItem('rol');
   }
 
   ngOnInit(){
@@ -44,12 +46,14 @@ export class HeaderComponent {
         if (!path.endsWith('/home')) {
           this.selectedModule = null;
         }
+        this.userRole = localStorage.getItem('rol');
         this.buildBreadcrumbs();
       });
-      this.buildBreadcrumbs();
-    }
+    this.userRole = localStorage.getItem('rol');
+    this.buildBreadcrumbs();
+  }
 
-    buildBreadcrumbs() {
+  buildBreadcrumbs() {
   const path = this.router.url.split('?')[0];
   const segments = path.split('/').filter(seg => seg && seg !== 'app');
   let crumbs: string[] = [];
@@ -88,7 +92,11 @@ export class HeaderComponent {
     goHome(){
       this.router.navigate(['/app/home']);
     }
-
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('rol');
+      this.router.navigate(['/login']);
+    }
     onMenuClick(){
       this.toggleSidebar.emit();
     }
